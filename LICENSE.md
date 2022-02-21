@@ -2,13 +2,13 @@
   Nikolaos Tosis <ergasies.uni@gmail.com>
 
   Nikolaos Tosis <ergasies.uni@gmail.com> will be mentioned as owner in this document. 
-  This file is part of the Nyx project. 
+  This file is part of the Nyx project.
 
   After this project commit with the new license agreement, the project
 is not anymore under the old license agreement but under this licence. 
 
   You are commited to accept the new license and to waive the rights
-of the old one. 
+of the old one.
 
   The Nyx project or any part of this can not be copied and/or distributed
 without the express permission of the 'owner' for commercial projects.
@@ -16,7 +16,7 @@ without the express permission of the 'owner' for commercial projects.
   For an open source project you are free to use,copy or to change this project
 or any part, but only until 4 different devices.
 If you are part of the project and you work on new features or you made
-a pull request fully tested, then you are free to use the Nyx project up to 
+a pull request fully tested, then you are free to use the Nyx project up to
 200 devices.
 
   The Nyx project has three diffirent parts, the first part is the Simulink Models,
@@ -25,11 +25,11 @@ C Code with the STM Framework.
 
   The third part is released under the BSD 3 license and the first and 
 the second part are released under this private license.
-If you use code of part 3, please read firt the licence aggreement. 
+If you use code of part 3, please read firt the licence aggreement.
 
   You are using this software without waranty and on your own risk.
 
-  The content and the condition of this license could change every time 
+  The content and the condition of this license could change every time
 witout a notice.
 
   1. Additional Definitions.
@@ -57,7 +57,7 @@ object code and/or source code for the Application, including any data
 and utility programs needed for reproducing the Combined Work from the
 Application, but excluding the System Libraries of the Combined Work.
 
-  
+
   2. Conveying Modified Versions.
 
   If you modify a copy of the Library, and, in your modifications, a
@@ -75,7 +75,7 @@ version:
 
    If you make any changes and you share your changes with the Nyx
    project, then you are a part of the project and you own 0.5% of probable
-   profit in the future for every tested and working pull request with 
+   profit in the future for every tested and working pull request with
    maximum amount of 10%.
    Special written expresion is required if you make more than 10 pull requests.
 
