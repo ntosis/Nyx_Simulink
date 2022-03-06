@@ -37,9 +37,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: all artifacts
-        path: |
+        path: | 
+         ./build/**/*.a
          ./build/**/*.o
-	 ./build/**/*.a
          !./build/**/*.mk
          !./build/**/*.su
         retention-days: 5
