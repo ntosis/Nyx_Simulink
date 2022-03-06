@@ -23,9 +23,10 @@ jobs:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     # Install latest CMake.
     - uses: lukka/get-cmake@latest
-    - name: "Print some env variables. "
+    - name: "Call cMake "
       run: |
        echo "Folder -> $GITHUB_WORKSPACE"
+       cd "Code"
        mkdir "build"
        cd "build"
        cmake ..
