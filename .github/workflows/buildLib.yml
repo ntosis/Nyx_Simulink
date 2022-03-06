@@ -31,7 +31,9 @@ jobs:
        cd "build"
        cmake ..
     - name: "Make command."
-      run: make
+      run: |
+       cd "Code/build"
+       make
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
