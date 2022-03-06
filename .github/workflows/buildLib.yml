@@ -39,8 +39,8 @@ jobs:
       with:
         name: all artifacts
         path: | 
-         ./build/**/*.a
-         ./build/**/*.o
-         !./build/**/*.mk
-         !./build/**/*.su
+         ./Code/build/**/*.a
+         ./Code/build/**/*.o
+         !./Code/build/**/*.mk
+         !./Code/build/**/*.su
         retention-days: 5
