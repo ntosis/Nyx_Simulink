@@ -58,8 +58,7 @@ Interface)
 #compile options
 add_compile_options(-mcpu=cortex-m4 -std=gnu11 -g -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx  -Og -ffunction-sections -fdata-sections -Wall -Wextra -fstack-usage
 --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb
--ffile-prefix-map=/home/runner/work/Nyx/Nyx/SW/STM32CubeIDE_prj=.
--ffile-prefix-map=/home/runner/work/Nyx_Simulink=.)
+-ffile-prefix-map=/home/runner/work/Nyx_Simulink/Nyx_Simulink/Code=.)
 
 #However, the file(GLOB...) allows for wildcard additions:
 file(GLOB SOURCES "ADCRawToIab/*.c"
