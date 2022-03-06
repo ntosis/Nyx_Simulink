@@ -1,0 +1,45 @@
+name: BuildSimulinkLib
+
+on:
+  push:
+    branches: [ master ] # set the trigger and the name of the bracnh
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build-the-Simulink-library
+    # use Ubuntu on the runner
+    runs-on: ubuntu-18.04
+      
+    steps:
+    - uses: actions/checkout@v2
+    - name: arm-none-eabi-gcc
+      uses: fiam/arm-none-eabi-gcc@v1.0.2
+      with:
+        release: '9-2020-q2'
+      env:
+        #this is a special option because the gcc arm instalation is not correctly.
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    # Install latest CMake.
+    - uses: lukka/get-cmake@latest
+    - name: "Print some env variables. "
+      run: |
+       echo "Folder -> $GITHUB_WORKSPACE"
+       mkdir "build"
+       cd "build"
+       cmake ..
+    - name: "Make command."
+      run: |
+       cd "build"
+       make
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: all artifacts
+        path: |
+         ./build/**/*.o
+	 ./build/**/*.a
+         !./build/**/*.mk
+         !./build/**/*.su
+        retention-days: 5
