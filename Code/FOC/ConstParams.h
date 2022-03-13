@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Fri Feb  4 14:26:17 2022
+ * C/C++ source code generated on : Tue Feb 15 20:50:32 2022
  */
 
 #ifndef RTW_HEADER_ConstParams_h_
@@ -15,19 +15,19 @@
 /* Const memory section */
 /* Exported data declaration */
 /* Declaration for custom storage class: Const */
-extern const int16_T ADC_V_OUT[4096];
+extern const real32_T ADC_V_OUT[4096];
 
 /* fixdt(1,16,2^-10,0) */
-extern const int16_T BrkPoints[3];
+extern const real32_T BrkPoints[3];
 
 /* fixdt(1,16,2^-8,0) */
-extern const int8_T DRV_GAIN;
+extern const real32_T DRV_GAIN;
 
 /* fixdt(1,8,2^-1,0) */
-extern const int16_T DRV_SHUNTR_OHM;
+extern const real32_T DRV_SHUNTR_OHM;
 
 /* fixdt(1,16,2^-15,0) */
-extern const uint8_T DRV_V_REF_Div2;
+extern const real32_T DRV_V_REF_Div2;
 
 /* fixdt(1,8,2^-5,0) */
 extern const real32_T EMFobsLdGain;
@@ -38,7 +38,7 @@ extern const real32_T EMFobsLdGain;
 extern const real32_T EMFobsRS;
 
 /* fixdt(1,16,2^-8,0) */
-extern const int16_T TqToIqConst;
+extern const real32_T TqToIqConst;
 
 /* fixdt(1,16,2^-8,0)
    Val=2/(3*p*psim)=2/3*Kt
@@ -46,7 +46,7 @@ extern const int16_T TqToIqConst;
 extern const int8_T dSoll;
 
 /* int8 */
-extern const int32_T p;
+extern const real32_T p;
 
 /* fixdt(1,32,2^-22,0) */
 extern const uint16_T pwmTableData[3];

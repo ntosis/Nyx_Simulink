@@ -1,13 +1,3 @@
-/*
- * File: rtwtypes.h
- *
- * Code generated for Simulink model 'ADCRawToIab'.
- *
- * Model version                  : 1.0
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Thu Jan 27 21:24:27 2022
- */
-
 #ifndef RTWTYPES_H
 #define RTWTYPES_H
 
@@ -143,9 +133,3 @@ typedef struct {
 typedef void * pointer_T;
 
 #endif                                 /* RTWTYPES_H */
-
-/*
- * File trailer for generated code.
- *
- * [EOF]
- */

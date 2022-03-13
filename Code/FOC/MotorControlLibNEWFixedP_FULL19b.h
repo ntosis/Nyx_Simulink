@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Fri Feb  4 14:26:17 2022
+ * C/C++ source code generated on : Tue Feb 15 20:50:32 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -31,6 +31,7 @@
 
 /* Includes for objects with custom storage classes. */
 #include "ConstParams.h"
+#include "rtGetNaN.h"
 #include "rt_nonfinite.h"
 #include "rtGetInf.h"
 
@@ -49,13 +50,13 @@
 
 /* Block signals for system '<Root>/FluxObsAngle' */
 typedef struct {
-  int16_T Merge;                       /* '<S18>/Merge' */
+  real32_T Merge;                      /* '<S18>/Merge' */
 } B_FluxObsAngle_MotorControlLi_T;
 
 /* Block states (default storage) for system '<Root>/FluxObsAngle' */
 typedef struct {
-  int16_T Delay_DSTATE;                /* '<S20>/Delay' */
-  int16_T Delay_DSTATE_e;              /* '<S19>/Delay' */
+  real32_T Delay_DSTATE;               /* '<S20>/Delay' */
+  real32_T Delay_DSTATE_e;             /* '<S19>/Delay' */
 } DW_FluxObsAngle_MotorControlL_T;
 
 /* Zero-crossing (trigger) state for system '<Root>/FluxObsAngle' */
@@ -66,9 +67,9 @@ typedef struct {
 
 /* Block states (default storage) for system '<Root>/PI_Controller' */
 typedef struct {
+  uint16_T UnitDelay_DSTATE;           /* '<S30>/Unit Delay' */
   int16_T Integrator_DSTATE;           /* '<S104>/Integrator' */
   int16_T Integrator_DSTATE_m;         /* '<S60>/Integrator' */
-  uint16_T UnitDelay_DSTATE;            /* '<S30>/Unit Delay' */
   int8_T Integrator_PrevResetState;    /* '<S104>/Integrator' */
   int8_T Integrator_PrevResetState_l;  /* '<S60>/Integrator' */
 } DW_PI_Controller_MotorControl_T;
@@ -76,8 +77,6 @@ typedef struct {
 /* Block signals for system '<Root>/Position observer' */
 typedef struct {
   real32_T UnitDelay;                  /* '<S124>/Unit Delay' */
-  real32_T DataTypeConversion1;        /* '<S9>/Data Type Conversion1' */
-  real32_T DataTypeConversion3;        /* '<S9>/Data Type Conversion3' */
   int16_T Sum1;                        /* '<S135>/Sum1' */
   int16_T Sum1_p;                      /* '<S132>/Sum1' */
   int16_T UnitDelay_n;                 /* '<S9>/Unit Delay' */
@@ -115,9 +114,8 @@ typedef struct {
 
 /* Block signals (default storage) */
 typedef struct {
-  real32_T DataTypeConversion;         /* '<Root>/Data Type Conversion' */
-  int16_T RateTransition3;             /* '<Root>/Rate Transition3' */
-  int16_T RateTransition2;             /* '<Root>/Rate Transition2' */
+  real32_T RateTransition3;            /* '<Root>/Rate Transition3' */
+  real32_T RateTransition2;            /* '<Root>/Rate Transition2' */
   boolean_T RateTransition4;           /* '<Root>/Rate Transition4' */
   boolean_T FixPtRelationalOperator;   /* '<S144>/FixPt Relational Operator' */
   B_Positionobserver_MotorContr_T Positionobserver;/* '<Root>/Position observer' */
@@ -126,12 +124,13 @@ typedef struct {
 
 /* Block states (default storage) for system '<Root>' */
 typedef struct {
+  real32_T Delay_DSTATE;               /* '<Root>/Delay' */
+  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S137>/Discrete-Time Integrator' */
+  real32_T DelayInput1_DSTATE;         /* '<S144>/Delay Input1' */
+  real32_T RateTransition3_Buffer0;    /* '<Root>/Rate Transition3' */
+  real32_T RateTransition2_Buffer0;    /* '<Root>/Rate Transition2' */
+  real32_T RateTransition1_Buffer;     /* '<Root>/Rate Transition1' */
   uint16_T UnitDelay1_DSTATE;          /* '<S141>/Unit Delay1' */
-  int16_T DiscreteTimeIntegrator_DSTATE;/* '<S137>/Discrete-Time Integrator' */
-  int16_T DelayInput1_DSTATE;          /* '<S144>/Delay Input1' */
-  int16_T RateTransition3_Buffer0;     /* '<Root>/Rate Transition3' */
-  int16_T RateTransition2_Buffer0;     /* '<Root>/Rate Transition2' */
-  int16_T RateTransition1_Buffer;      /* '<Root>/Rate Transition1' */
   boolean_T UnitDelay_DSTATE;          /* '<S136>/Unit Delay' */
   boolean_T DelayInput1_DSTATE_f;      /* '<S139>/Delay Input1' */
   boolean_T UnitDelay1_DSTATE_m;       /* '<S136>/Unit Delay1' */
@@ -167,7 +166,7 @@ typedef struct {
 
 /* External outputs (root outports fed by signals with default storage) */
 typedef struct {
-  int16_T Position;                    /* '<Root>/Position' */
+  real32_T Position;                   /* '<Root>/Position' */
 } ExtY_MotorControlLibNEWFixedP_T;
 
 /* Real-time Model Data Structure */
@@ -211,29 +210,29 @@ extern int16_T dth_dt;                 /* '<Root>/Inport4' */
 extern boolean_T resetPIIntegrator;    /* '<Root>/Inport5' */
 extern boolean_T Sig_change_SVMalgorithm;/* '<Root>/In1' */
 extern boolean_T resetPIIntegratorDQ;  /* '<Root>/Inport6' */
+extern real32_T Sig_theta_el_m;        /* '<Root>/Delay' */
+extern real32_T Sig_Ia_m;              /* '<Root>/ADCRAwToCurrent(Iabc)' */
+extern real32_T Sig_Ib_m;              /* '<Root>/ADCRAwToCurrent(Iabc)' */
+extern real32_T Sig_cos_m;             /* '<S12>/Sum6' */
+extern real32_T Sig_Ibeta_m;           /* '<S1>/one_by_sqrt3' */
+extern real32_T Sig_sin_m;             /* '<S12>/Sum4' */
+extern real32_T Sig_Iq_Soll;           /* '<Root>/Tq--> iqRef' */
+extern real32_T Sig_dAxis_m;           /* '<Root>/Gain2' */
+extern real32_T Sig_qAxis_m;           /* '<Root>/Gain3' */
+extern real32_T Sig_Vqsatu_m;          /* '<Root>/DQ_Limiter' */
+extern real32_T Sig_Vdsatu_m;          /* '<Root>/DQ_Limiter' */
+extern real32_T Sig_Va_m;              /* '<Root>/Gain' */
+extern real32_T Sig_Vb_m;              /* '<Root>/Gain1' */
+extern real32_T Sig_Valpha_m;          /* '<S7>/Switch' */
+extern real32_T Sig_Vbeta_m;           /* '<S7>/Switch1' */
+extern real32_T Sig_Vgamma_m;          /* '<S7>/Switch2' */
 extern real32_T Sig_Angular_Velocity_radpsec_m;/* '<Root>/Calculate spin speed1' */
 extern real32_T Sig_rpm;               /* '<Root>/Calculate spin speed1' */
-extern int16_T Sig_theta_el_m;         /* '<Root>/Delay' */
-extern int16_T Sig_Ia_m;               /* '<Root>/ADCRAwToCurrent(Iabc)' */
-extern int16_T Sig_Ib_m;               /* '<Root>/ADCRAwToCurrent(Iabc)' */
-extern int16_T Sig_cos_m;              /* '<S12>/Sum6' */
-extern int16_T Sig_Ibeta_m;            /* '<S1>/one_by_sqrt3' */
-extern int16_T Sig_sin_m;              /* '<S12>/Sum4' */
-extern int16_T Sig_Iq_Soll;            /* '<Root>/Tq--> iqRef' */
-extern int16_T Sig_dAxis_m;            /* '<Root>/Gain2' */
-extern int16_T Sig_qAxis_m;            /* '<Root>/Gain3' */
-extern int16_T Sig_Vqsatu_m;           /* '<Root>/Gain5' */
-extern int16_T Sig_Vdsatu_m;           /* '<Root>/Gain4' */
-extern int16_T Sig_Va_m;               /* '<Root>/Gain' */
-extern int16_T Sig_Vb_m;               /* '<Root>/Gain1' */
-extern int16_T Sig_Valpha_m;           /* '<S7>/Switch' */
-extern int16_T Sig_Vbeta_m;            /* '<S7>/Switch1' */
-extern int16_T Sig_Vgamma_m;           /* '<S7>/Switch2' */
-extern int16_T constantAngle;          /* '<S137>/Discrete-Time Integrator' */
-extern int16_T PositionObsAnlge;       /* '<S123>/Data Type Conversion5' */
-extern int16_T Sig_dAxis_PI_out;       /* '<S111>/Saturation' */
-extern int16_T Sig_qAxis_PI_out;       /* '<S67>/Saturation' */
-extern int16_T FluxObsAngle;           /* '<S17>/PositionGain' */
+extern real32_T constantAngle;         /* '<S137>/Discrete-Time Integrator' */
+extern real32_T PositionObsAnlge;      /* '<S123>/Data Type Conversion5' */
+extern real32_T Sig_dAxis_PI_out;      /* '<S111>/Saturation' */
+extern real32_T Sig_qAxis_PI_out;      /* '<S67>/Saturation' */
+extern real32_T FluxObsAngle;          /* '<S17>/PositionGain' */
 extern real32_T Sig_Emfobs_errorSum_m; /* '<S124>/Add6' */
 extern real32_T Sig_Emfobs_PI_out;     /* '<S131>/Saturation' */
 extern real32_T di_dt_E9;              /* '<S130>/Inductance' */
@@ -247,8 +246,8 @@ extern int16_T Sig_First_LPF_out;      /* '<S126>/Product1'
 extern int16_T Sig_Second_LPF_out;     /* '<S127>/Product1'
                                         * 16En6
                                         */
-extern int16_T Sig_dAxis_errorSum_m;   /* '<S6>/Add' */
-extern int16_T Sig_qAxis_errorSum_m;   /* '<S6>/Add1' */
+extern real32_T Sig_dAxis_errorSum_m;  /* '<S6>/Add' */
+extern real32_T Sig_qAxis_errorSum_m;  /* '<S6>/Add1' */
 
 /*
  * Exported Global Parameters
@@ -258,73 +257,73 @@ extern int16_T Sig_qAxis_errorSum_m;   /* '<S6>/Add1' */
  * these parameters and exports their symbols.
  *
  */
+extern real32_T Ki_Iab_EMFobs;         /* Variable: Ki_Iab_EMFobs
+                                        * Referenced by:
+                                        *   '<S132>/Ki'
+                                        *   '<S135>/Ki'
+                                        * fixdt(1,16,2^-3,0)
+                                        */
+extern real32_T Ki_dAxis;              /* Variable: Ki_dAxis
+                                        * Referenced by: '<S6>/Constant7'
+                                        * fixdt(1,16,2^-5,0)
+                                        */
+extern real32_T Ki_qAxis;              /* Variable: Ki_qAxis
+                                        * Referenced by: '<S6>/Constant5'
+                                        * fixdt(1,16,2^-5,0)
+                                        */
+extern real32_T Kp_Iab_EMFobs;         /* Variable: Kp_Iab_EMFobs
+                                        * Referenced by:
+                                        *   '<S131>/Kp'
+                                        *   '<S134>/Kp'
+                                        * fixdt(1,16,2^-8,0)
+                                        */
+extern real32_T Kp_dAxis;              /* Variable: Kp_dAxis
+                                        * Referenced by: '<S6>/Constant6'
+                                        * fixdt(1,16,2^-5,0)
+                                        */
+extern real32_T Kp_qAxis;              /* Variable: Kp_qAxis
+                                        * Referenced by: '<S6>/Constant4'
+                                        * fixdt(1,16,2^-5,0)
+                                        */
+extern real32_T MaxBckEMFVol_sat_neg;  /* Variable: MaxBckEMFVol_sat_neg
+                                        * Referenced by:
+                                        *   '<S131>/Saturation'
+                                        *   '<S134>/Saturation'
+                                        * fixdt(1,16,2^-2,0)
+                                        */
+extern real32_T MaxBckEMFVol_sat_pos;  /* Variable: MaxBckEMFVol_sat_pos
+                                        * Referenced by:
+                                        *   '<S131>/Saturation'
+                                        *   '<S134>/Saturation'
+                                        * fixdt(1,32,2^-8,0)
+                                        */
 extern real32_T TsIntern;              /* Variable: TsIntern
                                         * Referenced by:
                                         *   '<S130>/Gain'
                                         *   '<S133>/Gain'
                                         * fixdt(0,32,2^-24,0)
                                         */
-extern int16_T MaxBckEMFVol_sat_neg;   /* Variable: MaxBckEMFVol_sat_neg
-                                        * Referenced by:
-                                        *   '<S131>/Saturation'
-                                        *   '<S134>/Saturation'
-                                        * fixdt(1,16,2^-2,0)
-                                        */
-extern int16_T MaxBckEMFVol_sat_pos;   /* Variable: MaxBckEMFVol_sat_pos
-                                        * Referenced by:
-                                        *   '<S131>/Saturation'
-                                        *   '<S134>/Saturation'
-                                        * fixdt(1,32,2^-8,0)
-                                        */
-extern int16_T Ki_Iab_EMFobs;          /* Variable: Ki_Iab_EMFobs
-                                        * Referenced by:
-                                        *   '<S132>/Ki'
-                                        *   '<S135>/Ki'
-                                        * fixdt(1,16,2^-3,0)
-                                        */
-extern int16_T d_q_Voltage_Limiter_max;/* Variable: d_q_Voltage_Limiter_max
-                                        * Referenced by: '<Root>/DQ_Limiter'
-                                        * =12/sqrt(3)
-                                        */
-extern int16_T d_q_Voltage_Limiter_sat_neg;/* Variable: d_q_Voltage_Limiter_sat_neg
-                                            * Referenced by:
-                                            *   '<S53>/DeadZone'
-                                            *   '<S67>/Saturation'
-                                            *   '<S97>/DeadZone'
-                                            *   '<S111>/Saturation'
-                                            * fixdt(1,16,2^-4,0)
-                                            */
-extern int16_T d_q_Voltage_Limiter_sat_pos;/* Variable: d_q_Voltage_Limiter_sat_pos
-                                            * Referenced by:
-                                            *   '<S53>/DeadZone'
-                                            *   '<S67>/Saturation'
-                                            *   '<S97>/DeadZone'
-                                            *   '<S111>/Saturation'
-                                            * fixdt(1,16,2^-4,0)
-                                            */
-extern int16_T Ki_dAxis;               /* Variable: Ki_dAxis
-                                        * Referenced by: '<S6>/Constant7'
-                                        * fixdt(1,16,2^-5,0)
-                                        */
-extern int16_T Ki_qAxis;               /* Variable: Ki_qAxis
-                                        * Referenced by: '<S6>/Constant5'
-                                        * fixdt(1,16,2^-5,0)
-                                        */
-extern int16_T Kp_dAxis;               /* Variable: Kp_dAxis
-                                        * Referenced by: '<S6>/Constant6'
-                                        * fixdt(1,16,2^-5,0)
-                                        */
-extern int16_T Kp_qAxis;               /* Variable: Kp_qAxis
-                                        * Referenced by: '<S6>/Constant4'
-                                        * fixdt(1,16,2^-5,0)
-                                        */
-extern int16_T Kp_Iab_EMFobs;          /* Variable: Kp_Iab_EMFobs
-                                        * Referenced by:
-                                        *   '<S131>/Kp'
-                                        *   '<S134>/Kp'
-                                        * fixdt(1,16,2^-8,0)
-                                        */
-extern int16_T qSoll;                  /* Variable: qSoll
+extern real32_T d_q_Voltage_Limiter_max;/* Variable: d_q_Voltage_Limiter_max
+                                         * Referenced by: '<Root>/DQ_Limiter'
+                                         * =12/sqrt(3)
+                                         */
+extern real32_T d_q_Voltage_Limiter_sat_neg;/* Variable: d_q_Voltage_Limiter_sat_neg
+                                             * Referenced by:
+                                             *   '<S53>/DeadZone'
+                                             *   '<S67>/Saturation'
+                                             *   '<S97>/DeadZone'
+                                             *   '<S111>/Saturation'
+                                             * fixdt(1,16,2^-4,0)
+                                             */
+extern real32_T d_q_Voltage_Limiter_sat_pos;/* Variable: d_q_Voltage_Limiter_sat_pos
+                                             * Referenced by:
+                                             *   '<S53>/DeadZone'
+                                             *   '<S67>/Saturation'
+                                             *   '<S97>/DeadZone'
+                                             *   '<S111>/Saturation'
+                                             * fixdt(1,16,2^-4,0)
+                                             */
+extern real32_T qSoll;                 /* Variable: qSoll
                                         * Referenced by: '<Root>/q Soll'
                                         * fixdt(1,16,2^-8,0)
                                         */
@@ -391,7 +390,19 @@ extern RT_MODEL_MotorControlLibNEWFi_T *const MotorControlLibNEWFixedP_FUL_M;
  * Block '<S121>/Data Type Duplicate' : Unused code path elimination
  * Block '<S8>/Data Type Duplicate' : Unused code path elimination
  * Block '<S2>/Data Type Conversion1' : Eliminate redundant data type conversion
+ * Block '<S11>/Get_FractionVal' : Eliminate redundant data type conversion
+ * Block '<S3>/Data Type Conversion' : Eliminate redundant data type conversion
+ * Block '<Root>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S17>/Data Type Conversion2' : Eliminate redundant data type conversion
+ * Block '<S18>/Data Type Conversion' : Eliminate redundant data type conversion
+ * Block '<S18>/Data Type Conversion1' : Eliminate redundant data type conversion
+ * Block '<S18>/Data Type Conversion2' : Eliminate redundant data type conversion
+ * Block '<Root>/Gain4' : Eliminated nontunable gain of 1
+ * Block '<Root>/Gain5' : Eliminated nontunable gain of 1
+ * Block '<S9>/Data Type Conversion' : Eliminate redundant data type conversion
+ * Block '<S9>/Data Type Conversion1' : Eliminate redundant data type conversion
+ * Block '<S9>/Data Type Conversion2' : Eliminate redundant data type conversion
+ * Block '<S9>/Data Type Conversion3' : Eliminate redundant data type conversion
  * Block '<S130>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S124>/Rate Transition' : Eliminated since input and output rates are identical
  * Block '<S124>/Rate Transition1' : Eliminated since input and output rates are identical

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'SafetyChecks'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Thu Jan 27 21:25:06 2022
+ * C/C++ source code generated on : Tue Feb 15 20:42:20 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -15,6 +15,7 @@
 
 #ifndef RTW_HEADER_SafetyChecks_h_
 #define RTW_HEADER_SafetyChecks_h_
+#include <math.h>
 #ifndef SafetyChecks_COMMON_INCLUDES_
 # define SafetyChecks_COMMON_INCLUDES_
 #include "rtwtypes.h"
@@ -56,7 +57,7 @@ extern uint16_T MaximumCurrentBeforeReaction;/* Variable: MaximumCurrentBeforeRe
 /* Model reference registration function */
 extern void SafetyChecks_initialize(const char_T **rt_errorStatus,
   RT_MODEL_SafetyChecks_T *const SafetyChecks_M);
-extern void SafetyChecks(const int16_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW);
+extern void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW);
 
 /*-
  * The generated code includes comments that allow you to trace directly
