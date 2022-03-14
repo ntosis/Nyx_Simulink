@@ -323,7 +323,7 @@ extern real32_T d_q_Voltage_Limiter_sat_pos;/* Variable: d_q_Voltage_Limiter_sat
                                              *   '<S111>/Saturation'
                                              * fixdt(1,16,2^-4,0)
                                              */
-extern real32_T qSoll;                 /* Variable: qSoll
+extern volatile real32_T qSoll;                 /* Variable: qSoll
                                         * Referenced by: '<Root>/q Soll'
                                         * fixdt(1,16,2^-8,0)
                                         */
