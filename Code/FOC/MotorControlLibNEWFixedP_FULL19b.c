@@ -135,7 +135,7 @@ real32_T d_q_Voltage_Limiter_sat_pos = 6.0F;/* Variable: d_q_Voltage_Limiter_sat
                                              *   '<S111>/Saturation'
                                              * fixdt(1,16,2^-4,0)
                                              */
-real32_T qSoll = 0.0F;                 /* Variable: qSoll
+volatile real32_T qSoll = 0.0F;                 /* Variable: qSoll
                                         * Referenced by: '<Root>/q Soll'
                                         * fixdt(1,16,2^-8,0)
                                         */
