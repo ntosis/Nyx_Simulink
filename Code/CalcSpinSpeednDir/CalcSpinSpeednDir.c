@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.1
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:41:56 2022
+ * C/C++ source code generated on : Sun Mar 20 18:17:15 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -29,8 +29,7 @@
 void CalcSpinSpeednDir(const real32_T *rtu_Theta, B_CalcSpinSpeednDir_c_T
   *localB, DW_CalcSpinSpeednDir_f_T *localDW)
 {
-  real32_T rateLimiterRate;
-  real32_T rtb_rpm;
+  real32_T rtb_Switch;
   boolean_T rtb_rightDirFlag;
   boolean_T rtb_NOT;
   boolean_T rtb_Compare_f;
@@ -60,12 +59,12 @@ void CalcSpinSpeednDir(const real32_T *rtu_Theta, B_CalcSpinSpeednDir_c_T
   /* Sum: '<S2>/Add6' incorporates:
    *  S-Function (sfix_udelay): '<S2>/Tapped Delay1'
    */
-  rtb_rpm = *rtu_Theta - localDW->TappedDelay1_X[2];
+  rtb_Switch = *rtu_Theta - localDW->TappedDelay1_X[2];
 
   /* RelationalOperator: '<S6>/Compare' incorporates:
    *  Constant: '<S6>/Constant'
    */
-  rtb_Compare_h = (rtb_rpm > 0.0F);
+  rtb_Compare_h = (rtb_Switch > 0.0F);
 
   /* Logic: '<S2>/AND' */
   rtb_rightDirFlag = (rtb_rightDirFlag && rtb_Compare_f && rtb_Compare_h);
@@ -79,8 +78,8 @@ void CalcSpinSpeednDir(const real32_T *rtu_Theta, B_CalcSpinSpeednDir_c_T
    *  Logic: '<S2>/NOT4'
    *  RelationalOperator: '<S7>/Compare'
    */
-  rtb_NOT = ((!(rtb_rpm == 0.0F)) && ((boolean_T)((rtb_NOT && (!rtb_Compare_f) &&
-    (!rtb_Compare_h)) ^ rtb_rightDirFlag)));
+  rtb_NOT = ((!(rtb_Switch == 0.0F)) && ((boolean_T)((rtb_NOT && (!rtb_Compare_f)
+    && (!rtb_Compare_h)) ^ rtb_rightDirFlag)));
 
   /* Chart: '<Root>/Chart1' incorporates:
    *  UnitDelay: '<Root>/Unit Delay1'
@@ -176,46 +175,44 @@ void CalcSpinSpeednDir(const real32_T *rtu_Theta, B_CalcSpinSpeednDir_c_T
    *  Switch: '<Root>/Switch'
    *  UnitDelay: '<Root>/Unit Delay2'
    */
-  rtb_rpm = rtb_Invertsignalinputifmotorspi - localDW->UnitDelay2_DSTATE;
+  rtb_Switch = rtb_Invertsignalinputifmotorspi - localDW->UnitDelay2_DSTATE;
 
   /* Switch: '<Root>/Switch' incorporates:
    *  Constant: '<Root>/Constant1'
    *  Sum: '<Root>/Add2'
    *  Sum: '<Root>/Add3'
    */
-  if (!(rtb_rpm >= 0.0F)) {
-    rtb_rpm += 6.28318548F;
+  if (!(rtb_Switch >= 0.0F)) {
+    rtb_Switch += 6.28318548F;
   }
 
   /* Product: '<Root>/Dth//dt' incorporates:
    *  Constant: '<Root>/Constant2'
    *  Constant: '<Root>/Constant4'
    */
-  rtb_rpm = rtb_rpm / p / 0.0002F;
+  Sig_rpm = rtb_Switch / (real32_T)p / 0.0002F;
 
   /* RateLimiter: '<Root>/Rate Limiter' */
-  rateLimiterRate = rtb_rpm - localDW->PrevY;
-  if (rateLimiterRate > 10.0F) {
-    rtb_rpm = localDW->PrevY + 10.0F;
+  rtb_Switch = Sig_rpm - localDW->PrevY;
+  if (rtb_Switch > 10.0F) {
+    Sig_rpm = localDW->PrevY + 10.0F;
   } else {
-    if (rateLimiterRate < -10.0F) {
-      rtb_rpm = localDW->PrevY + -10.0F;
+    if (rtb_Switch < -10.0F) {
+      Sig_rpm = localDW->PrevY + -10.0F;
     }
   }
 
-  localDW->PrevY = rtb_rpm;
+  localDW->PrevY = Sig_rpm;
 
   /* End of RateLimiter: '<Root>/Rate Limiter' */
 
   /* UnitConversion: '<Root>/Unit Conversion' */
   /* Unit Conversion - from: rad/sec to: rpm
      Expression: output = (9.5493*input) + (0) */
-  rtb_rpm *= 9.54929638F;
+  Sig_rpm *= 9.54929638F;
 
   /* Switch: '<Root>/Switch1' */
-  if (rtb_NOT) {
-    Sig_rpm = rtb_rpm;
-  } else {
+  if (!rtb_NOT) {
     Sig_rpm = (real32_T)localB->setOutput;
   }
 

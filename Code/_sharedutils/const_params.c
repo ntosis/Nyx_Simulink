@@ -1,11 +1,11 @@
 /*
  * const_params.c
  *
- * Code generation for model "MotorControlLibNEWFixedP_FULL19b".
+ * Code generation for model "MotorControlLib".
  *
- * Model version              : 1.0
+ * Model version              : 1.1
  * Simulink Coder version : 9.2 (R2019b) 18-Jul-2019
- * C source code generated on : Tue Feb 15 20:50:32 2022
+ * C source code generated on : Sun Mar 20 19:59:20 2022
  */
 #include "rtwtypes.h"
 

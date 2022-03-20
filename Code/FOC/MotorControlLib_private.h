@@ -1,11 +1,11 @@
 /*
- * File: MotorControlLibNEWFixedP_FULL19b_private.h
+ * File: MotorControlLib_private.h
  *
- * Code generated for Simulink model 'MotorControlLibNEWFixedP_FULL19b'.
+ * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.0
+ * Model version                  : 1.1
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:50:32 2022
+ * C/C++ source code generated on : Sun Mar 20 19:59:20 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13,11 +13,11 @@
  * Validation result: Not run
  */
 
-#ifndef RTW_HEADER_MotorControlLibNEWFixedP_FULL19b_private_h_
-#define RTW_HEADER_MotorControlLibNEWFixedP_FULL19b_private_h_
+#ifndef RTW_HEADER_MotorControlLib_private_h_
+#define RTW_HEADER_MotorControlLib_private_h_
 #include "rtwtypes.h"
 #include "zero_crossing_types.h"
-#include "MotorControlLibNEWFixedP_FULL19b.h"
+#include "MotorControlLib.h"
 
 /* Includes for objects with custom storage classes. */
 #include "InterfaceBswApp.h"
@@ -82,29 +82,29 @@ extern const boolean_T rtCP_pooled_h9SS684EhrQx[16];
                                                                   * Referenced by: '<S143>/Logic'
                                                                   */
 
-extern void MotorControlLibNEWFi_DQ_Limiter(real32_T rtu_Vd_ref, real32_T
-  rtu_Vq_ref, real32_T rty_Vd_sat[2], real32_T *rty_Vmax_unsat, real32_T
-  rtp_Vmax);
-extern void MotorControlLibNEW_FluxObsAngle(boolean_T rtu_Enable, real32_T
-  rtu_In1, real32_T rtu_In2, real32_T rtu_In3, real32_T rtu_In4, real32_T
-  *rty_FluxObsAngle, B_FluxObsAngle_MotorControlLi_T *localB, const
-  ConstB_FluxObsAngle_MotorCont_T *localC, DW_FluxObsAngle_MotorControlL_T
-  *localDW, ZCE_FluxObsAngle_MotorControl_T *localZCE);
-extern void MotorControlLibNE_PI_Controller(int8_T rtu_dRef, real32_T rtu_qRef,
+/* Imported (extern) block signals */
+extern uint16_T Duty;                  /* '<Root>/Input' */
+extern void MotorControlLib_DQ_Limiter(real32_T rtu_Vd_ref, real32_T rtu_Vq_ref,
+  real32_T rty_Vd_sat[2], real32_T *rty_Vmax_unsat, int16_T rtp_Vmax);
+extern void MotorControlLib_Flux_observer(boolean_T rtu_Enable, real32_T rtu_In1,
+  real32_T rtu_In2, real32_T rtu_In3, real32_T rtu_In4, int16_T
+  *rty_FluxObsAngle, B_Flux_observer_MotorControlL_T *localB, const
+  ConstB_Flux_observer_MotorCon_T *localC, DW_Flux_observer_MotorControl_T
+  *localDW, ZCE_Flux_observer_MotorContro_T *localZCE);
+extern void MotorControlLib_PI_Controller(int8_T rtu_dRef, real32_T rtu_qRef,
   real32_T rtu_In5, real32_T rtu_In6, boolean_T rtu_Inport6, real32_T *rty_d,
   real32_T *rty_q, DW_PI_Controller_MotorControl_T *localDW);
 extern void MotorCon_Positionobserver_Reset(DW_Positionobserver_MotorCont_T
   *localDW);
 extern void MotorC_Positionobserver_Disable(DW_Positionobserver_MotorCont_T
   *localDW);
-extern void MotorControlLi_Positionobserver(RT_MODEL_MotorControlLibNEWFi_T *
-  const MotorControlLibNEWFixedP_FUL_M, boolean_T rtu_Enable, real32_T rtu_Va,
-  real32_T rtu_Vb, real32_T rtu_Ia, real32_T rtu_Ib, boolean_T rtu_In5, real32_T
-  *rty_theta, B_Positionobserver_MotorContr_T *localB,
-  DW_Positionobserver_MotorCont_T *localDW, ZCE_Positionobserver_MotorCon_T
-  *localZCE);
+extern void MotorControlLi_Positionobserver(RT_MODEL_MotorControlLib_T * const
+  MotorControlLib_M, boolean_T rtu_Enable, real32_T rtu_Va, real32_T rtu_Vb,
+  real32_T rtu_Ia, real32_T rtu_Ib, boolean_T rtu_In5, int16_T *rty_theta,
+  B_Positionobserver_MotorContr_T *localB, DW_Positionobserver_MotorCont_T
+  *localDW, ZCE_Positionobserver_MotorCon_T *localZCE);
 
-#endif              /* RTW_HEADER_MotorControlLibNEWFixedP_FULL19b_private_h_ */
+#endif                               /* RTW_HEADER_MotorControlLib_private_h_ */
 
 /*
  * File trailer for generated code.

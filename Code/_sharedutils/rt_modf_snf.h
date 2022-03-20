@@ -1,5 +1,5 @@
 /*
- * File: rtGetNaN.h
+ * File: rt_modf_snf.h
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
@@ -8,16 +8,13 @@
  * C/C++ source code generated on : Sun Mar 20 18:17:27 2022
  */
 
-#ifndef RTW_HEADER_rtGetNaN_h_
-#define RTW_HEADER_rtGetNaN_h_
-#include <stddef.h>
+#ifndef SHARE_rt_modf_snf
+#define SHARE_rt_modf_snf
 #include "rtwtypes.h"
-#include "rt_nonfinite.h"
 
-extern real_T rtGetNaN(void);
-extern real32_T rtGetNaNF(void);
+extern real32_T rt_modf_snf(real32_T u0, real32_T u1);
 
-#endif                                 /* RTW_HEADER_rtGetNaN_h_ */
+#endif
 
 /*
  * File trailer for generated code.

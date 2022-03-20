@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 1.5
+ * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Nov  2 10:54:19 2021
+ * C/C++ source code generated on : Sun Mar 20 18:17:27 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -24,20 +24,18 @@
 
 /* Includes for objects with custom storage classes. */
 #include "PWMtoAngle_const.h"
-
-/* Macros for accessing real-time model data structure */
-#ifndef rtmGetErrorStatus
-# define rtmGetErrorStatus(rtm)        ((rtm)->errorStatus)
-#endif
-
-#ifndef rtmSetErrorStatus
-# define rtmSetErrorStatus(rtm, val)   ((rtm)->errorStatus = (val))
-#endif
+#include "ConstParams.h"
+#include "rtGetInf.h"
+#include "rt_nonfinite.h"
 
 /* Real-time Model Data Structure */
 struct tag_RTM_ConvertPWMtoAngle_T {
-  const char_T * volatile errorStatus;
+  const char_T **errorStatus;
 };
+
+typedef struct {
+  RT_MODEL_ConvertPWMtoAngle_T rtm;
+} MdlrefDW_ConvertPWMtoAngle_T;
 
 /*
  * Exported Global Signals
@@ -47,16 +45,12 @@ struct tag_RTM_ConvertPWMtoAngle_T {
  * these signals and export their symbols.
  *
  */
-extern boolean_T setAngleFormat;       /* '<Root>/Inport' */
-extern int16_T Angle_sensor_in;        /* '<Root>/Switch' */
+extern real32_T Angle_sensor_in;       /* '<Root>/Mod' */
 
-/* Model entry point functions */
-extern void ConvertPWMtoAngle_initialize(void);
-extern void ConvertPWMtoAngle_step(void);
-extern void ConvertPWMtoAngle_terminate(void);
-
-/* Real-time Model object */
-extern RT_MODEL_ConvertPWMtoAngle_T *const ConvertPWMtoAngle_M;
+/* Model reference registration function */
+extern void ConvertPWMtoAngle_initialize(const char_T **rt_errorStatus,
+  RT_MODEL_ConvertPWMtoAngle_T *const ConvertPWMtoAngle_M);
+extern void ConvertPWMtoAngle(const boolean_T *rtu_setAngleFormat);
 
 /*-
  * The generated code includes comments that allow you to trace directly
