@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ADCRawToIab'.
  *
- * Model version                  : 1.0
+ * Model version                  : 1.1
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:16:58 2022
+ * C/C++ source code generated on : Tue Mar 22 15:01:01 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -17,20 +17,21 @@
 #include "ADCRawToIab_private.h"
 
 /* Output and update for referenced model: 'ADCRawToIab' */
-void ADCRawToIab(const uint16_T rtu_adcBuffer[2], const int16_T
-                 rtu_autoCalADCVal[2], real32_T *rty_Ia, real32_T *rty_Ib)
+void ADCRawToIab(real32_T *rty_Ia, real32_T *rty_Ib)
 {
   int32_T tmp;
   uint16_T tmp_0;
   int32_T tmp_1;
 
   /* LookupNDDirect: '<Root>/Direct Lookup Table (n-D)' incorporates:
+   *  Inport: '<Root>/adcBuffer'
+   *  Inport: '<Root>/autoCalADCVal'
    *  Sum: '<Root>/Add2'
    *
    * About '<Root>/Direct Lookup Table (n-D)':
    *  1-dimensional Direct Look-Up returning a Scalar,
    */
-  tmp = rtu_adcBuffer[0] + rtu_autoCalADCVal[0];
+  tmp = adcBuffer[0] + autoCalADCVal[0];
   if (tmp < 0) {
     tmp = 0;
   } else {
@@ -77,12 +78,14 @@ void ADCRawToIab(const uint16_T rtu_adcBuffer[2], const int16_T
     0.0009765625F / ((real32_T)tmp_1 * 0.0009765625F);
 
   /* LookupNDDirect: '<Root>/Direct Lookup Table (n-D)1' incorporates:
+   *  Inport: '<Root>/adcBuffer'
+   *  Inport: '<Root>/autoCalADCVal'
    *  Sum: '<Root>/Add3'
    *
    * About '<Root>/Direct Lookup Table (n-D)1':
    *  1-dimensional Direct Look-Up returning a Scalar,
    */
-  tmp = rtu_adcBuffer[1] + rtu_autoCalADCVal[1];
+  tmp = adcBuffer[1] + autoCalADCVal[1];
   if (tmp < 0) {
     tmp = 0;
   } else {

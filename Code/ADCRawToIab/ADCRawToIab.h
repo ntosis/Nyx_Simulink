@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ADCRawToIab'.
  *
- * Model version                  : 1.0
+ * Model version                  : 1.1
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:16:58 2022
+ * C/C++ source code generated on : Tue Mar 22 15:01:01 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -37,8 +37,7 @@ typedef struct {
 /* Model reference registration function */
 extern void ADCRawToIab_initialize(const char_T **rt_errorStatus,
   RT_MODEL_ADCRawToIab_T *const ADCRawToIab_M);
-extern void ADCRawToIab(const uint16_T rtu_adcBuffer[2], const int16_T
-  rtu_autoCalADCVal[2], real32_T *rty_Ia, real32_T *rty_Ib);
+extern void ADCRawToIab(real32_T *rty_Ia, real32_T *rty_Ib);
 
 /*-
  * The generated code includes comments that allow you to trace directly

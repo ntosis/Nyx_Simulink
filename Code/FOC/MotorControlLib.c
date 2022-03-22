@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 19:59:20 2022
+ * C/C++ source code generated on : Tue Mar 22 15:02:33 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -28,6 +28,7 @@ int16_T dth_dt;                        /* '<Root>/Inport4' */
 boolean_T resetPIIntegrator;           /* '<Root>/Inport5' */
 boolean_T Sig_change_SVMalgorithm;     /* '<Root>/In1' */
 boolean_T resetPIIntegratorDQ;         /* '<Root>/Inport6' */
+boolean_T setAngleFormat;              /* '<Root>/Input1' */
 real32_T Sig_theta_el_m;               /* '<Root>/Delay' */
 real32_T Sig_Ia_m;                     /* '<Root>/ADCRAwToCurrent(Iabc)' */
 real32_T Sig_Ib_m;                     /* '<Root>/ADCRAwToCurrent(Iabc)' */
@@ -162,9 +163,6 @@ DW_MotorControlLib_T MotorControlLib_DW;
 
 /* Previous zero-crossings (trigger) states */
 PrevZCX_MotorControlLib_T MotorControlLib_PrevZCX;
-
-/* External inputs (root inport signals with default storage) */
-ExtU_MotorControlLib_T MotorControlLib_U;
 
 /* External outputs (root outports fed by signals with default storage) */
 ExtY_MotorControlLib_T MotorControlLib_Y;
@@ -1217,8 +1215,7 @@ void MotorControlLib_step(void)
      *  Inport: '<Root>/Inport'
      *  Inport: '<Root>/Inport7'
      */
-    ADCRawToIab(&MotorControlLib_U.Inport[0], &MotorControlLib_U.Inport7[0],
-                &Sig_Ia_m, &Sig_Ib_m);
+    ADCRawToIab(&Sig_Ia_m, &Sig_Ib_m);
 
     /* Sum: '<S11>/Sum2' incorporates:
      *  DataTypeConversion: '<S11>/Data Type Conversion1'
@@ -1632,7 +1629,7 @@ void MotorControlLib_step(void)
      *  Inport: '<Root>/Input'
      *  Inport: '<Root>/Input1'
      */
-    ConvertPWMtoAngle(&MotorControlLib_U.setAngleFormat);
+    ConvertPWMtoAngle();
 
     /* MultiPortSwitch: '<Root>/Multiport Switch' incorporates:
      *  Delay: '<Root>/Delay'
@@ -1705,8 +1702,10 @@ void MotorControlLib_initialize(void)
   rt_InitInfAndNaN(sizeof(real_T));
 
   /* external inputs */
+  set_AngleInput = 3U;
   dth_dt = 210;
   Sig_change_SVMalgorithm = true;
+  setAngleFormat = true;
 
   /* Model Initialize function for ModelReference Block: '<Root>/ADCRAwToCurrent(Iabc)' */
   ADCRawToIab_initialize(rtmGetErrorStatusPointer(MotorControlLib_M),

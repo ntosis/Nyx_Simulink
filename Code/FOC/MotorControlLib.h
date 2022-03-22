@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 19:59:20 2022
+ * C/C++ source code generated on : Tue Mar 22 15:02:33 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -167,13 +167,6 @@ typedef struct {
   ConstB_Flux_observer_MotorCon_T Flux_observer;/* '<Root>/Flux_observer' */
 } ConstB_MotorControlLib_T;
 
-/* External inputs (root inport signals with default storage) */
-typedef struct {
-  uint16_T Inport[2];                  /* '<Root>/Inport' */
-  int16_T Inport7[2];                  /* '<Root>/Inport7' */
-  boolean_T setAngleFormat;            /* '<Root>/Input1' */
-} ExtU_MotorControlLib_T;
-
 /* External outputs (root outports fed by signals with default storage) */
 typedef struct {
   real32_T Position;                   /* '<Root>/Position' */
@@ -201,9 +194,6 @@ extern B_MotorControlLib_T MotorControlLib_B;
 /* Block states (default storage) */
 extern DW_MotorControlLib_T MotorControlLib_DW;
 
-/* External inputs (root inport signals with default storage) */
-extern ExtU_MotorControlLib_T MotorControlLib_U;
-
 /* External outputs (root outports fed by signals with default storage) */
 extern ExtY_MotorControlLib_T MotorControlLib_Y;
 extern const ConstB_MotorControlLib_T MotorControlLib_ConstB;/* constant block i/o */
@@ -223,6 +213,7 @@ extern int16_T dth_dt;                 /* '<Root>/Inport4' */
 extern boolean_T resetPIIntegrator;    /* '<Root>/Inport5' */
 extern boolean_T Sig_change_SVMalgorithm;/* '<Root>/In1' */
 extern boolean_T resetPIIntegratorDQ;  /* '<Root>/Inport6' */
+extern boolean_T setAngleFormat;       /* '<Root>/Input1' */
 extern real32_T Sig_theta_el_m;        /* '<Root>/Delay' */
 extern real32_T Sig_Ia_m;              /* '<Root>/ADCRAwToCurrent(Iabc)' */
 extern real32_T Sig_Ib_m;              /* '<Root>/ADCRAwToCurrent(Iabc)' */
