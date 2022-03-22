@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:17:27 2022
+ * C/C++ source code generated on : Tue Mar 22 15:01:39 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -45,12 +45,13 @@ typedef struct {
  * these signals and export their symbols.
  *
  */
+extern boolean_T setAngleFormat;       /* '<Root>/setAngleFormat' */
 extern real32_T Angle_sensor_in;       /* '<Root>/Mod' */
 
 /* Model reference registration function */
 extern void ConvertPWMtoAngle_initialize(const char_T **rt_errorStatus,
   RT_MODEL_ConvertPWMtoAngle_T *const ConvertPWMtoAngle_M);
-extern void ConvertPWMtoAngle(const boolean_T *rtu_setAngleFormat);
+extern void ConvertPWMtoAngle(void);
 
 /*-
  * The generated code includes comments that allow you to trace directly
