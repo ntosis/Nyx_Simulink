@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:17:27 2022
+ * C/C++ source code generated on : Tue Mar 22 15:01:39 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -18,7 +18,7 @@
 #include "rt_modf_snf.h"
 
 /* Output and update for referenced model: 'ConvertPWMtoAngle' */
-void ConvertPWMtoAngle(const boolean_T *rtu_setAngleFormat)
+void ConvertPWMtoAngle(void)
 {
   int16_T rtb_Switch;
   uint16_T tmp;
@@ -28,13 +28,14 @@ void ConvertPWMtoAngle(const boolean_T *rtu_setAngleFormat)
    *  Constant: '<Root>/Constant'
    *  DataTypeConversion: '<Root>/Data Type Conversion'
    *  Inport: '<Root>/Input'
+   *  Inport: '<Root>/setAngleFormat'
    *  LookupNDDirect: '<Root>/Direct Lookup Table (n-D)'
    *  Sum: '<Root>/Add'
    *
    * About '<Root>/Direct Lookup Table (n-D)':
    *  1-dimensional Direct Look-Up returning a Scalar,
    */
-  if (*rtu_setAngleFormat) {
+  if (setAngleFormat) {
     /* LookupNDDirect: '<Root>/Direct Lookup Table (n-D)' incorporates:
      *  Inport: '<Root>/Input'
      *
