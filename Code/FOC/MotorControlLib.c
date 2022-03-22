@@ -22,7 +22,7 @@
 
 /* Exported block signals */
 boolean_T enableFluxObs;               /* '<Root>/Inport2' */
-uint8_T set_AngleInput=3;                /* '<Root>/Inport1' */
+uint8_T set_AngleInput;                /* '<Root>/Inport1' */
 boolean_T enablePositionObs;           /* '<Root>/Inport3' */
 int16_T dth_dt;                        /* '<Root>/Inport4' */
 boolean_T resetPIIntegrator;           /* '<Root>/Inport5' */
