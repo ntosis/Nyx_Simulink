@@ -114,19 +114,19 @@ int16_T d_q_Voltage_Limiter_sat_pos = 96;/* Variable: d_q_Voltage_Limiter_sat_po
                                           *   '<S111>/Saturation'
                                           * fixdt(1,16,2^-4,0)
                                           */
-int16_T Ki_dAxis = 0;                  /* Variable: Ki_dAxis
+int16_T Ki_dAxis = 100;                  /* Variable: Ki_dAxis
                                         * Referenced by: '<S6>/Constant7'
                                         * fixdt(1,16,2^-5,0)
                                         */
-int16_T Ki_qAxis = 0;                  /* Variable: Ki_qAxis
+int16_T Ki_qAxis = 100;                  /* Variable: Ki_qAxis
                                         * Referenced by: '<S6>/Constant5'
                                         * fixdt(1,16,2^-5,0)
                                         */
-int16_T Kp_dAxis = 32;                 /* Variable: Kp_dAxis
+int16_T Kp_dAxis = 4;                 /* Variable: Kp_dAxis
                                         * Referenced by: '<S6>/Constant6'
                                         * fixdt(1,16,2^-5,0)
                                         */
-int16_T Kp_qAxis = 32;                 /* Variable: Kp_qAxis
+int16_T Kp_qAxis = 25;                 /* Variable: Kp_qAxis
                                         * Referenced by: '<S6>/Constant4'
                                         * fixdt(1,16,2^-5,0)
                                         */
@@ -136,7 +136,7 @@ int16_T Kp_Iab_EMFobs = 256;           /* Variable: Kp_Iab_EMFobs
                                         *   '<S134>/Kp'
                                         * fixdt(1,16,2^-8,0)
                                         */
-int16_T qSoll = 0;                     /* Variable: qSoll
+int16_T qSoll = 600;                     /* Variable: qSoll
                                         * Referenced by: '<Root>/q Soll'
                                         * fixdt(1,16,2^-8,0)
                                         */
