@@ -71,7 +71,7 @@ typedef struct {
 typedef struct {
   real32_T Integrator_DSTATE;          /* '<S104>/Integrator' */
   real32_T Integrator_DSTATE_m;        /* '<S60>/Integrator' */
-  uint8_T UnitDelay_DSTATE;            /* '<S30>/Unit Delay' */
+  uint16_T UnitDelay_DSTATE;            /* '<S30>/Unit Delay' */
   int8_T Integrator_PrevResetState;    /* '<S104>/Integrator' */
   int8_T Integrator_PrevResetState_l;  /* '<S60>/Integrator' */
 } DW_PI_Controller_MotorControl_T;
