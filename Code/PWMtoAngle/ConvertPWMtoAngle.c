@@ -83,8 +83,8 @@ void ConvertPWMtoAngle(void)
    *  Constant: '<Root>/Constant1'
    *  Gain: '<Root>/Gain'
    */
-  Angle_sensor_in = rt_modf_snf(6.28318548F, (real32_T)tmp_0 * 0.000244140625F *
-    ((real32_T)rtb_Switch * 0.00390625F));
+  Angle_sensor_in = rt_modf_snf((real32_T)tmp_0 * 0.000244140625F *
+    ((real32_T)rtb_Switch * 0.00390625F),6.28318548F);
 }
 
 /* Model initialize function */
