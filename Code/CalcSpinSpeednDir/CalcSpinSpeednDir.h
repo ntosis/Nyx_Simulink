@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'CalcSpinSpeednDir'.
  *
- * Model version                  : 1.4
+ * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Fri Apr  8 13:08:23 2022
+ * C/C++ source code generated on : Mon Apr 11 17:09:17 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -15,41 +15,49 @@
 
 #ifndef RTW_HEADER_CalcSpinSpeednDir_h_
 #define RTW_HEADER_CalcSpinSpeednDir_h_
+#include <math.h>
 #ifndef CalcSpinSpeednDir_COMMON_INCLUDES_
 # define CalcSpinSpeednDir_COMMON_INCLUDES_
 #include "rtwtypes.h"
-#include "zero_crossing_types.h"
 #endif                                 /* CalcSpinSpeednDir_COMMON_INCLUDES_ */
 
 #include "CalcSpinSpeednDir_types.h"
 
 /* Includes for objects with custom storage classes. */
 #include "ConstParams.h"
+#include "rt_nonfinite.h"
+#include "rtGetInf.h"
 
-/* Block states (default storage) for model 'CalcSpinSpeednDir' */
-typedef struct {
-  real32_T UnitDelay3_DSTATE;          /* '<Root>/Unit Delay3' */
-  uint16_T Delay_DSTATE;               /* '<Root>/Delay' */
-  uint16_T Delay1_DSTATE;              /* '<Root>/Delay1' */
-  boolean_T DelayInput1_DSTATE;        /* '<S3>/Delay Input1' */
-} DW_CalcSpinSpeednDir_f_T;
+/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+# define rtmGetErrorStatus(rtm)        ((rtm)->errorStatus)
+#endif
 
-/* Zero-crossing (trigger) state for model 'CalcSpinSpeednDir' */
+#ifndef rtmSetErrorStatus
+# define rtmSetErrorStatus(rtm, val)   ((rtm)->errorStatus = (val))
+#endif
+
+/* Block states (default storage) for system '<Root>' */
 typedef struct {
-  ZCSigState Delay_Reset_ZCE;          /* '<Root>/Delay' */
-} ZCE_CalcSpinSpeednDir_T;
+  real32_T UnitDelay_DSTATE;           /* '<Root>/Unit Delay' */
+} DW_CalcSpinSpeednDir_T;
+
+/* External inputs (root inport signals with default storage) */
+typedef struct {
+  real32_T Thetael;                    /* '<Root>/Theta el' */
+} ExtU_CalcSpinSpeednDir_T;
 
 /* Real-time Model Data Structure */
 struct tag_RTM_CalcSpinSpeednDir_T {
-  const char_T **errorStatus;
+  const char_T * volatile errorStatus;
 };
 
-typedef struct {
-  DW_CalcSpinSpeednDir_f_T rtdw;
-  RT_MODEL_CalcSpinSpeednDir_T rtm;
-  ZCE_CalcSpinSpeednDir_T rtzce;
-} MdlrefDW_CalcSpinSpeednDir_T;
+/* Block states (default storage) */
+extern DW_CalcSpinSpeednDir_T CalcSpinSpeednDir_DW;
 
+/* External inputs (root inport signals with default storage) */
+extern ExtU_CalcSpinSpeednDir_T CalcSpinSpeednDir_U;
+extern real32_T Sig_Theta_el_cont_m;
 /*
  * Exported Global Signals
  *
@@ -58,15 +66,16 @@ typedef struct {
  * these signals and export their symbols.
  *
  */
-extern real32_T Sig_rpm;               /* '<Root>/Product1' */
+extern real32_T Sig_rpm;               /* '<Root>/Switch' */
 extern real32_T Sig_Angular_Velocity_radpsec_m;/* '<Root>/Unit Conversion1' */
 
-/* Model reference registration function */
-extern void CalcSpinSpeednDir_initialize(const char_T **rt_errorStatus,
-  RT_MODEL_CalcSpinSpeednDir_T *const CalcSpinSpeednDir_M,
-  ZCE_CalcSpinSpeednDir_T *localZCE);
-extern void CalcSpinSpeednDir(const real32_T *rtu_Thetael,
-  DW_CalcSpinSpeednDir_f_T *localDW, ZCE_CalcSpinSpeednDir_T *localZCE);
+/* Model entry point functions */
+extern void CalcSpinSpeednDir_initialize(void);
+extern void CalcSpinSpeednDir_step(void);
+extern void CalcSpinSpeednDir_terminate(void);
+
+/* Real-time Model object */
+extern RT_MODEL_CalcSpinSpeednDir_T *const CalcSpinSpeednDir_M;
 
 /*-
  * The generated code includes comments that allow you to trace directly
@@ -83,9 +92,7 @@ extern void CalcSpinSpeednDir(const real32_T *rtu_Thetael,
  * Here is the system hierarchy for this model
  *
  * '<Root>' : 'CalcSpinSpeednDir'
- * '<S1>'   : 'CalcSpinSpeednDir/Compare To Constant'
- * '<S2>'   : 'CalcSpinSpeednDir/Compare To Constant1'
- * '<S3>'   : 'CalcSpinSpeednDir/Update the signal in rising edge'
+ * '<S1>'   : 'CalcSpinSpeednDir/Compare To Zero'
  */
 #endif                                 /* RTW_HEADER_CalcSpinSpeednDir_h_ */
 

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'CalcSpinSpeednDir'.
  *
- * Model version                  : 1.4
+ * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Fri Apr  8 13:08:23 2022
+ * C/C++ source code generated on : Mon Apr 11 17:09:17 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16,24 +16,6 @@
 #ifndef RTW_HEADER_CalcSpinSpeednDir_private_h_
 #define RTW_HEADER_CalcSpinSpeednDir_private_h_
 #include "rtwtypes.h"
-#include "zero_crossing_types.h"
-
-/* Macros for accessing real-time model data structure */
-#ifndef rtmGetErrorStatus
-# define rtmGetErrorStatus(rtm)        (*((rtm)->errorStatus))
-#endif
-
-#ifndef rtmSetErrorStatus
-# define rtmSetErrorStatus(rtm, val)   (*((rtm)->errorStatus) = (val))
-#endif
-
-#ifndef rtmGetErrorStatusPointer
-# define rtmGetErrorStatusPointer(rtm) (rtm)->errorStatus
-#endif
-
-#ifndef rtmSetErrorStatusPointer
-# define rtmSetErrorStatusPointer(rtm, val) ((rtm)->errorStatus = (val))
-#endif
 #endif                             /* RTW_HEADER_CalcSpinSpeednDir_private_h_ */
 
 /*

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'CalcSpinSpeednDir'.
  *
- * Model version                  : 1.4
+ * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Fri Apr  8 13:08:23 2022
+ * C/C++ source code generated on : Mon Apr 11 17:09:17 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16,102 +16,87 @@
 #include "CalcSpinSpeednDir.h"
 #include "CalcSpinSpeednDir_private.h"
 
-/* Output and update for referenced model: 'CalcSpinSpeednDir' */
-void CalcSpinSpeednDir(const real32_T *rtu_Thetael, DW_CalcSpinSpeednDir_f_T
-  *localDW, ZCE_CalcSpinSpeednDir_T *localZCE)
+/* Exported block signals */
+real32_T Sig_rpm;                      /* '<Root>/Switch' */
+real32_T Sig_Angular_Velocity_radpsec_m;/* '<Root>/Unit Conversion1' */
+
+/* Block states (default storage) */
+DW_CalcSpinSpeednDir_T CalcSpinSpeednDir_DW;
+
+/* External inputs (root inport signals with default storage) */
+ExtU_CalcSpinSpeednDir_T CalcSpinSpeednDir_U;
+
+/* Real-time model */
+RT_MODEL_CalcSpinSpeednDir_T CalcSpinSpeednDir_M_;
+RT_MODEL_CalcSpinSpeednDir_T *const CalcSpinSpeednDir_M = &CalcSpinSpeednDir_M_;
+
+/* Model step function */
+void CalcSpinSpeednDir_step(void)
 {
-  boolean_T rtb_OR;
+  real32_T rtb_Add;
 
-  /* Sum: '<Root>/Add1' incorporates:
-   *  UnitDelay: '<Root>/Unit Delay3'
+  /* Sum: '<Root>/Add' incorporates:
+   *  Inport: '<Root>/Theta el'
+   *  UnitDelay: '<Root>/Unit Delay'
    */
-  localDW->UnitDelay3_DSTATE -= *rtu_Thetael;
+  rtb_Add = Sig_Theta_el_cont_m - CalcSpinSpeednDir_DW.UnitDelay_DSTATE;
 
-  /* Logic: '<Root>/OR' incorporates:
+  /* Switch: '<Root>/Switch' incorporates:
    *  Constant: '<S1>/Constant'
-   *  Constant: '<S2>/Constant'
+   *  Logic: '<Root>/NOT'
+   *  Product: '<Root>/Divide'
    *  RelationalOperator: '<S1>/Compare'
-   *  RelationalOperator: '<S2>/Compare'
-   *  UnitDelay: '<Root>/Unit Delay3'
    */
-  rtb_OR = ((localDW->UnitDelay3_DSTATE >= 5.0F) || (localDW->UnitDelay3_DSTATE <=
-             -5.0F));
+  if (!(rtb_Add < 0.0F)) {
+    /* Product: '<Root>/Divide' incorporates:
+     *  Constant: '<Root>/Constant1'
+     *  Constant: '<Root>/Constant2'
+     */
+    rtb_Add = floorf(rtb_Add / 6.28F);
+    if (rtIsNaNF(rtb_Add) || rtIsInfF(rtb_Add)) {
+      rtb_Add = 0.0F;
+    } else {
+      rtb_Add = fmodf(rtb_Add, 4.2949673E+9F);
+    }
 
-  /* Delay: '<Root>/Delay' */
-  if ((!rtb_OR) && (localZCE->Delay_Reset_ZCE != ZERO_ZCSIG)) {
-    localDW->Delay_DSTATE = 0U;
+    rtb_Add = floorf((real32_T)(rtb_Add < 0.0F ? -(int32_T)(uint32_T)-rtb_Add :
+      (int32_T)(uint32_T)rtb_Add) / (real32_T)p);
+    if (rtIsNaNF(rtb_Add) || rtIsInfF(rtb_Add)) {
+      rtb_Add = 0.0F;
+    } else {
+      rtb_Add = fmodf(rtb_Add, 4.2949673E+9F);
+    }
+
+    Sig_rpm = (real32_T)(rtb_Add < 0.0F ? -(int32_T)(uint32_T)-rtb_Add :
+                         (int32_T)(uint32_T)rtb_Add);
   }
 
-  localZCE->Delay_Reset_ZCE = rtb_OR;
-
-  /* Sum: '<Root>/Add5' incorporates:
-   *  Constant: '<Root>/Constant6'
-   *  Delay: '<Root>/Delay'
-   */
-  localDW->Delay_DSTATE++;
-
-  /* Switch: '<Root>/Switch2' incorporates:
-   *  Delay: '<Root>/Delay'
-   *  Delay: '<Root>/Delay1'
-   *  RelationalOperator: '<S3>/FixPt Relational Operator'
-   *  UnitDelay: '<S3>/Delay Input1'
-   *
-   * Block description for '<S3>/Delay Input1':
-   *
-   *  Store in Global RAM
-   */
-  if ((int32_T)rtb_OR > (int32_T)localDW->DelayInput1_DSTATE) {
-    localDW->Delay1_DSTATE = localDW->Delay_DSTATE;
-  }
-
-  /* End of Switch: '<Root>/Switch2' */
-
-  /* Product: '<Root>/Product' incorporates:
-   *  Constant: '<Root>/Constant'
-   *  Delay: '<Root>/Delay1'
-   *  UnitDelay: '<Root>/Unit Delay3'
-   */
-  localDW->UnitDelay3_DSTATE = (real32_T)localDW->Delay1_DSTATE * 0.0002F;
-
-  /* Product: '<Root>/Divide' incorporates:
-   *  UnitDelay: '<Root>/Unit Delay3'
-   */
-  localDW->UnitDelay3_DSTATE = 1.0F / localDW->UnitDelay3_DSTATE;
-
-  /* Product: '<Root>/Product1' incorporates:
-   *  Constant: '<Root>/Constant5'
-   *  Gain: '<Root>/Hz to Rpm'
-   *  UnitDelay: '<Root>/Unit Delay3'
-   */
-  Sig_rpm = 60.0F * localDW->UnitDelay3_DSTATE * (1.0F / (real32_T)p);
+  /* End of Switch: '<Root>/Switch' */
 
   /* UnitConversion: '<Root>/Unit Conversion1' */
   /* Unit Conversion - from: rpm to: rad/sec
      Expression: output = (0.10472*input) + (0) */
   Sig_Angular_Velocity_radpsec_m = 0.104719758F * Sig_rpm;
 
-  /* Update for UnitDelay: '<Root>/Unit Delay3' */
-  localDW->UnitDelay3_DSTATE = *rtu_Thetael;
-
-  /* Update for UnitDelay: '<S3>/Delay Input1'
-   *
-   * Block description for '<S3>/Delay Input1':
-   *
-   *  Store in Global RAM
+  /* Update for UnitDelay: '<Root>/Unit Delay' incorporates:
+   *  Inport: '<Root>/Theta el'
    */
-  localDW->DelayInput1_DSTATE = rtb_OR;
+  CalcSpinSpeednDir_DW.UnitDelay_DSTATE = Sig_Theta_el_cont_m;
 }
 
 /* Model initialize function */
-void CalcSpinSpeednDir_initialize(const char_T **rt_errorStatus,
-  RT_MODEL_CalcSpinSpeednDir_T *const CalcSpinSpeednDir_M,
-  ZCE_CalcSpinSpeednDir_T *localZCE)
+void CalcSpinSpeednDir_initialize(void)
 {
   /* Registration code */
 
-  /* initialize error status */
-  rtmSetErrorStatusPointer(CalcSpinSpeednDir_M, rt_errorStatus);
-  localZCE->Delay_Reset_ZCE = ZERO_ZCSIG;
+  /* initialize non-finites */
+  rt_InitInfAndNaN(sizeof(real_T));
+}
+
+/* Model terminate function */
+void CalcSpinSpeednDir_terminate(void)
+{
+  /* (no terminate code required) */
 }
 
 /*
