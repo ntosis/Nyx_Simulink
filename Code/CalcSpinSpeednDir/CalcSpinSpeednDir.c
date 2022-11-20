@@ -60,7 +60,7 @@ void CalcSpinSpeednDir_step(void)
     }
 
     rtb_Add = floorf((real32_T)(rtb_Add < 0.0F ? -(int32_T)(uint32_T)-rtb_Add :
-      (int32_T)(uint32_T)rtb_Add) / (real32_T)p);
+      (int32_T)(uint32_T)rtb_Add) / (real32_T)polepairs);
     if (rtIsNaNF(rtb_Add) || rtIsInfF(rtb_Add)) {
       rtb_Add = 0.0F;
     } else {

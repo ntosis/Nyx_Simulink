@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 19:59:20 2022
+ * C/C++ source code generated on : Fri Oct 28 10:27:56 2022
  */
 
 #ifndef RTW_HEADER_ConstParams_h_
@@ -44,7 +44,8 @@ extern const int16_T TqToIqConst;
 extern const int8_T dSoll;
 
 /* int8 */
-extern const uint8_T p;
+extern const real32_T degresProCounter;
+extern const uint8_T polepairs;
 extern const uint16_T pwmTableData[3];
 
 #endif                                 /* RTW_HEADER_ConstParams_h_ */

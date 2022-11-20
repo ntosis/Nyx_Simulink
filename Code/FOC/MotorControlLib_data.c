@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.7
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Apr 12 13:22:11 2022
+ * C/C++ source code generated on : Fri Oct 28 10:27:56 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -18,12 +18,12 @@
 
 /* Invariant block signals (default storage) */
 const ConstB_MotorControlLib_T MotorControlLib_ConstB = {
-  /* Start of '<Root>/FluxObserver' */
+  /* Start of '<Root>/Flux_observer' */
   {
-    0,                                 /* '<S25>/Compare' */
-    1                                  /* '<S26>/Compare' */
+    0,                                 /* '<S24>/Compare' */
+    1                                  /* '<S25>/Compare' */
   }
-  /* End of '<Root>/FluxObserver' */
+  /* End of '<Root>/Flux_observer' */
 };
 
 /*

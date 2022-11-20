@@ -1,11 +1,11 @@
 /*
  * File: ConstParams.c
  *
- * Code generated for Simulink model 'MotorControlLibNEWFixedP_FULL19b'.
+ * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.0
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:50:32 2022
+ * C/C++ source code generated on : Fri Oct 28 10:27:56 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -320,7 +320,7 @@ const int16_T ADC_V_OUT[4097] = { 0, 1, 2, 2, 3, 4, 5, 6, 7, 7, 8, 9, 10, 11, 12
   3375, 3376, 3377, 3378, 3378, 3379 } ;
 
 /* fixdt(1,16,2^-10,0) */
-const real32_T BrkPoints[3] = { -6.0F, 0.0F, 6.0F } ;
+const real32_T BrkPoints[3] = { -5.0F, 0.0F, 5.0F } ;
 
 const int8_T DRV_GAIN = 20;
 
@@ -347,7 +347,8 @@ const int16_T TqToIqConst = 256;
 const int8_T dSoll = 0;
 
 /* int8 */
-const uint8_T p = 4U;
+const real32_T degresProCounter = 0.0030679615757712823; //6.135923125e-3F;
+const uint8_T polepairs = 4U;
 const uint16_T pwmTableData[3] = { 0U, 250U, 500U } ;
 
 /*

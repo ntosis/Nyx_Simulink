@@ -17,6 +17,8 @@
 #include "SafetyChecks_private.h"
 #include "InterfaceBswApp.h"
 
+float Iabc[3]={0};
+char Flags[2]={0};
 /* Disable for referenced model: 'SafetyChecks' */
 void SafetyChecks_Disable(DW_SafetyChecks_f_T *localDW)
 {
@@ -55,6 +57,10 @@ void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW)
    *  RelationalOperator: '<S3>/Compare'
    *  Sum: '<Root>/Add'
    */
+  Iabc[2]=(0.0F - rtu_Iab[0]) - rtu_Iab[1];
+  Iabc[1]=rtu_Iab[1];
+  Iabc[0]=rtu_Iab[0];
+
   if ((fabsf((0.0F - rtu_Iab[0]) - rtu_Iab[1]) > tmp) || (fabsf(rtu_Iab[0]) >
        tmp) || (fabsf(rtu_Iab[1]) > tmp)) {
     if (!localDW->delayerrorreaction_MODE) {
@@ -71,11 +77,11 @@ void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW)
      *  UnitDelay: '<S4>/Unit Delay1'
      */
     localDW->UnitDelay1_DSTATE++;
-
+    Flags[0]=localDW->UnitDelay1_DSTATE;
     /* RelationalOperator: '<S4>/Relational Operator' incorporates:
      *  Constant: '<S4>/Constant1'
      */
-    emergency_disable_hardware(rtb_UnitDelay1 >= 4);
+    emergency_disable_hardware(rtb_UnitDelay1 >= 150U);
   } else {
     if (localDW->delayerrorreaction_MODE) {
       /* Disable for Outport: '<S4>/Output' */
