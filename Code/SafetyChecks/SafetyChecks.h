@@ -60,7 +60,8 @@ extern void SafetyChecks_initialize(const char_T **rt_errorStatus,
   RT_MODEL_SafetyChecks_T *const SafetyChecks_M);
 extern void SafetyChecks_Disable(DW_SafetyChecks_f_T *localDW);
 extern void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW);
-
+extern float Iabc[3];
+extern char Flags[2];
 /*-
  * The generated code includes comments that allow you to trace directly
  * back to the appropriate location in the model.  The basic format
