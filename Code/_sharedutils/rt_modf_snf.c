@@ -3,23 +3,21 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 1.0
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:17:27 2022
+ * Model version                  : 7.3
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:27 2022
  */
 
 #include "rtwtypes.h"
-#include "rtGetNaN.h"
-#include "rt_nonfinite.h"
-#include <float.h>
-#include <math.h>
 #include "rt_modf_snf.h"
+#include "rt_nonfinite.h"
+#include <math.h>
+#include <float.h>
+#include "rtGetNaN.h"
 
 real32_T rt_modf_snf(real32_T u0, real32_T u1)
 {
   real32_T y;
-  boolean_T yEq;
-  real32_T q;
   y = u0;
   if (u1 == 0.0F) {
     if (u0 == 0.0F) {
@@ -34,19 +32,19 @@ real32_T rt_modf_snf(real32_T u0, real32_T u1)
       y = u1;
     }
   } else {
+    boolean_T yEq;
     y = fmodf(u0, u1);
     yEq = (y == 0.0F);
     if ((!yEq) && (u1 > floorf(u1))) {
+      real32_T q;
       q = fabsf(u0 / u1);
-      yEq = (fabsf(q - floorf(q + 0.5F)) <= FLT_EPSILON * q);
+      yEq = !(fabsf(q - floorf(q + 0.5F)) > FLT_EPSILON * q);
     }
 
     if (yEq) {
       y = u1 * 0.0F;
-    } else {
-      if ((u0 < 0.0F) != (u1 < 0.0F)) {
-        y += u1;
-      }
+    } else if ((u0 < 0.0F) != (u1 < 0.0F)) {
+      y += u1;
     }
   }
 

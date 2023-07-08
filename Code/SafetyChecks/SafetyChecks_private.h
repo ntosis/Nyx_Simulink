@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'SafetyChecks'.
  *
- * Model version                  : 1.1
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:17:38 2022
+ * Model version                  : 5.2
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:33 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16,8 +16,9 @@
 #ifndef RTW_HEADER_SafetyChecks_private_h_
 #define RTW_HEADER_SafetyChecks_private_h_
 #include "rtwtypes.h"
+#include "SafetyChecks_types.h"
 
-/* Includes for objects with custom storage classes. */
+/* Includes for objects with custom storage classes */
 #include "InterfaceBswApp.h"
 #ifndef UCHAR_MAX
 #include <limits.h>
@@ -69,19 +70,19 @@ preprocessor word size checks.
 
 /* Macros for accessing real-time model data structure */
 #ifndef rtmGetErrorStatus
-# define rtmGetErrorStatus(rtm)        (*((rtm)->errorStatus))
+#define rtmGetErrorStatus(rtm)         (*((rtm)->errorStatus))
 #endif
 
 #ifndef rtmSetErrorStatus
-# define rtmSetErrorStatus(rtm, val)   (*((rtm)->errorStatus) = (val))
+#define rtmSetErrorStatus(rtm, val)    (*((rtm)->errorStatus) = (val))
 #endif
 
 #ifndef rtmGetErrorStatusPointer
-# define rtmGetErrorStatusPointer(rtm) (rtm)->errorStatus
+#define rtmGetErrorStatusPointer(rtm)  (rtm)->errorStatus
 #endif
 
 #ifndef rtmSetErrorStatusPointer
-# define rtmSetErrorStatusPointer(rtm, val) ((rtm)->errorStatus = (val))
+#define rtmSetErrorStatusPointer(rtm, val) ((rtm)->errorStatus = (val))
 #endif
 #endif                                 /* RTW_HEADER_SafetyChecks_private_h_ */
 

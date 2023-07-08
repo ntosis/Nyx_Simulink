@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'SafetyChecks'.
  *
- * Model version                  : 1.1
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:17:38 2022
+ * Model version                  : 5.2
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:33 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14,17 +14,19 @@
  */
 
 #include "SafetyChecks.h"
-#include "SafetyChecks_private.h"
+#include "rtwtypes.h"
+#include <math.h>
 #include "InterfaceBswApp.h"
+#include "SafetyChecks_private.h"
 
-float Iabc[3]={0};
-char Flags[2]={0};
 /* Disable for referenced model: 'SafetyChecks' */
 void SafetyChecks_Disable(DW_SafetyChecks_f_T *localDW)
 {
   /* Disable for Enabled SubSystem: '<Root>/delay error reaction' */
   if (localDW->delayerrorreaction_MODE) {
-    /* Disable for Outport: '<S4>/Output' */
+    /* Disable for RelationalOperator: '<S4>/Relational Operator' incorporates:
+     *  Outport: '<S4>/error reaction'
+     */
     emergency_disable_hardware(false);
     localDW->delayerrorreaction_MODE = false;
   }
@@ -35,7 +37,6 @@ void SafetyChecks_Disable(DW_SafetyChecks_f_T *localDW)
 /* Output and update for referenced model: 'SafetyChecks' */
 void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW)
 {
-  uint16_T rtb_UnitDelay1;
   real32_T tmp;
 
   /* Constant: '<S1>/Constant' incorporates:
@@ -57,12 +58,9 @@ void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW)
    *  RelationalOperator: '<S3>/Compare'
    *  Sum: '<Root>/Add'
    */
-  Iabc[2]=(0.0F - rtu_Iab[0]) - rtu_Iab[1];
-  Iabc[1]=rtu_Iab[1];
-  Iabc[0]=rtu_Iab[0];
-
   if ((fabsf((0.0F - rtu_Iab[0]) - rtu_Iab[1]) > tmp) || (fabsf(rtu_Iab[0]) >
        tmp) || (fabsf(rtu_Iab[1]) > tmp)) {
+    uint16_T rtb_UnitDelay1;
     if (!localDW->delayerrorreaction_MODE) {
       /* InitializeConditions for UnitDelay: '<S4>/Unit Delay1' */
       localDW->UnitDelay1_DSTATE = 0U;
@@ -77,17 +75,17 @@ void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW)
      *  UnitDelay: '<S4>/Unit Delay1'
      */
     localDW->UnitDelay1_DSTATE++;
-    Flags[0]=localDW->UnitDelay1_DSTATE;
+
     /* RelationalOperator: '<S4>/Relational Operator' incorporates:
      *  Constant: '<S4>/Constant1'
      */
-    emergency_disable_hardware(rtb_UnitDelay1 >= 150U);
-  } else {
-    if (localDW->delayerrorreaction_MODE) {
-      /* Disable for Outport: '<S4>/Output' */
-      emergency_disable_hardware(false);
-      localDW->delayerrorreaction_MODE = false;
-    }
+    emergency_disable_hardware(rtb_UnitDelay1 >= 125);
+  } else if (localDW->delayerrorreaction_MODE) {
+    /* Disable for RelationalOperator: '<S4>/Relational Operator' incorporates:
+     *  Outport: '<S4>/error reaction'
+     */
+    emergency_disable_hardware(false);
+    localDW->delayerrorreaction_MODE = false;
   }
 
   /* End of Logic: '<Root>/OR' */

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'SafetyChecks'.
  *
- * Model version                  : 1.1
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Sun Mar 20 18:17:38 2022
+ * Model version                  : 5.2
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:33 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)

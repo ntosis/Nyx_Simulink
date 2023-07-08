@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 1.10
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Mon Oct 31 09:38:40 2022
+ * Model version                  : 7.4
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:27:38 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14,190 +14,206 @@
  */
 
 #include "ConvertPWMtoAngle.h"
+#include "rtwtypes.h"
+#include "rt_modf_snf.h"
 #include "ConvertPWMtoAngle_private.h"
-#include <math.h>
+#include "PWMtoAngle_const.h"
+#include "ConstParams.h"
+#include "rt_nonfinite.h"
 
-
+/* Exported block signals */
+real32_T continuesAngle;               /* '<S1>/Merge' */
+real32_T initialAngle;
+volatile real32_T PWMAngle; /* '<S5>/Data Type Conversion' */
 MdlrefDW_ConvertPWMtoAngle_T ConvertPWMtoAngle_MdlrefDW;
 
+#define pi (3.141592653589793f)
 /* Block signals (default storage) */
 B_ConvertPWMtoAngle_c_T ConvertPWMtoAngle_B;
 
 /* Block states (default storage) */
 DW_ConvertPWMtoAngle_f_T ConvertPWMtoAngle_DW;
-volatile float mecAngle,mecAngleOld;
+
 /* Output and update for referenced model: 'ConvertPWMtoAngle' */
 void ConvertPWMtoAngle(const int16_T *rtu_qSollin, const boolean_T
   *rtu_detectStartUpin, const real32_T *rtu_AngleMecIn, real32_T *rty_AngleElec,
   real32_T *rty_AnlgleMec)
 {
+  real32_T rtb_Merge;
   boolean_T rtb_Compare;
-  uint32_T rtb_Switch;
-  uint16_T tmp;
 
-  mecAngle = *rty_AnlgleMec;
-  mecAngleOld = *rtu_AngleMecIn;
-
-  /* RelationalOperator: '<S1>/Compare' */
+  /* RelationalOperator: '<S2>/Compare' */
   rtb_Compare = (*rtu_qSollin == 0);
 
   /* If: '<Root>/If' incorporates:
-   *  Inport: '<Root>/EncoderCounterIn'
-   *  Inport: '<S4>/EncoderCounterIn'
    *  Logic: '<Root>/OR'
-   *  RelationalOperator: '<S2>/FixPt Relational Operator'
-   *  UnitDelay: '<Root>/Unit Delay'
-   *  UnitDelay: '<S2>/Delay Input1'
-   *  UnitDelay: '<S3>/Unit Delay1'
+   *  RelationalOperator: '<S4>/FixPt Relational Operator'
+   *  UnitDelay: '<S1>/Unit Delay1'
+   *  UnitDelay: '<S4>/Delay Input1'
    *
-   * Block description for '<S2>/Delay Input1':
+   * Block description for '<S4>/Delay Input1':
    *
    *  Store in Global RAM
    */
   if (((int32_T)rtb_Compare < (int32_T)ConvertPWMtoAngle_DW.DelayInput1_DSTATE) ||
       (*rtu_detectStartUpin)) {
-    /* Outputs for IfAction SubSystem: '<Root>/Subsystem' incorporates:
-     *  ActionPort: '<S4>/Action Port'
+    uint16_T tmp;
+
+    /* Outputs for IfAction SubSystem: '<Root>/Initialize angle from PWM sensor' incorporates:
+     *  ActionPort: '<S5>/Action Port'
      */
-    /* LookupNDDirect: '<S4>/Direct Lookup Table (n-D)' incorporates:
-     *  Inport: '<Root>/DutyIn'
+    /* LookupNDDirect: '<S5>/Direct Lookup Table (n-D)' incorporates:
+     *  Inport generated from: '<Root>/DutyIn'
      *
-     * About '<S4>/Direct Lookup Table (n-D)':
+     * About '<S5>/Direct Lookup Table (n-D)':
      *  1-dimensional Direct Look-Up returning a Scalar,
+     *
+     *     Remove protection against out-of-range input in generated code: 'off'
      */
-    if (Duty < 4095) {
+    if (Duty <= 4095) {
       tmp = Duty;
     } else {
       tmp = 4095U;
     }
 
-    /* DataTypeConversion: '<S4>/Data Type Conversion' incorporates:
-     *  LookupNDDirect: '<S4>/Direct Lookup Table (n-D)'
+    /* DataTypeConversion: '<S5>/Data Type Conversion' incorporates:
+     *  LookupNDDirect: '<S5>/Direct Lookup Table (n-D)'
      *
-     * About '<S4>/Direct Lookup Table (n-D)':
+     * About '<S5>/Direct Lookup Table (n-D)':
      *  1-dimensional Direct Look-Up returning a Scalar,
+     *
+     *     Remove protection against out-of-range input in generated code: 'off'
      */
-    *rty_AnlgleMec = (real32_T)Angle_T[tmp] * 0.0009765625F;
-    ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m = EncoderCounter;
+    initialAngle = ((real32_T)Angle_T[(4095U-tmp)] * 0.0009765625F );//+(pi/2);
 
-    /* End of Outputs for SubSystem: '<Root>/Subsystem' */
+    /* SignalConversion: '<S5>/Signal Copy1' */
+    rtb_Merge = initialAngle;
+
+    /* SignalConversion generated from: '<S5>/EncoderCounterIn' incorporates:
+     *  Inport generated from: '<Root>/EncoderCounterIn'
+     */
+    ConvertPWMtoAngle_B.EncoderCounterIn = EncoderCounter;
+
+    /* End of Outputs for SubSystem: '<Root>/Initialize angle from PWM sensor' */
   } else {
-    /* Outputs for IfAction SubSystem: '<Root>/If Action Subsystem1' incorporates:
-     *  ActionPort: '<S3>/Action Port'
+    /* Outputs for IfAction SubSystem: '<Root>/Calculate angle from encoder sensor' incorporates:
+     *  ActionPort: '<S1>/Action Port'
      */
-    /* Outputs for Enabled SubSystem: '<S3>/EnableOnFirstExec' incorporates:
-     *  EnablePort: '<S8>/Enable'
+    /* Outputs for Enabled SubSystem: '<S1>/EnableOnFirstExec' incorporates:
+     *  EnablePort: '<S9>/Enable'
      */
-    if (ConvertPWMtoAngle_DW.UnitDelay1_DSTATE) {
-      /* UnitDelay: '<S8>/Unit Delay' */
+    if (ConvertPWMtoAngle_DW.UnitDelay1_DSTATE)  {
+      /* UnitDelay: '<S9>/Unit Delay' */
       ConvertPWMtoAngle_B.UnitDelay = ConvertPWMtoAngle_DW.UnitDelay_DSTATE;
 
-      /* Sum: '<S8>/Add' incorporates:
-       *  Constant: '<S8>/Constant'
-       *  UnitDelay: '<S8>/Unit Delay'
+      /* Sum: '<S9>/Add' incorporates:
+       *  Constant: '<S9>/Constant'
+       *  UnitDelay: '<S9>/Unit Delay'
        */
       ConvertPWMtoAngle_DW.UnitDelay_DSTATE = ConvertPWMtoAngle_B.UnitDelay +
         1.0;
     }
 
-    /* End of Outputs for SubSystem: '<S3>/EnableOnFirstExec' */
+    /* End of Outputs for SubSystem: '<S1>/EnableOnFirstExec' */
 
-    /* Switch: '<S3>/Switch' incorporates:
-     *  UnitDelay: '<Root>/Unit Delay'
-     */
-    if (!(ConvertPWMtoAngle_B.UnitDelay > 0.0)) {
-      ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i =
-        ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m;
+    /* Switch: '<S1>/Switch' */
+    if (ConvertPWMtoAngle_B.UnitDelay > 0.0) {
+      /* Switch: '<S1>/Switch' incorporates:
+       *  UnitDelay: '<S1>/Unit Delay'
+       */
+      ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m =
+        ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i;
     }
 
-    /* End of Switch: '<S3>/Switch' */
+    /* End of Switch: '<S1>/Switch' */
 
-    /* If: '<S3>/If' incorporates:
-     *  Inport: '<Root>/EncoderCounterIn'
-     *  RelationalOperator: '<S6>/Relational Operator'
+    /* If: '<S1>/If' incorporates:
+     *  DataStoreRead: '<S1>/Data Store Read'
+     *  Inport generated from: '<Root>/EncoderCounterIn'
+     *  RelationalOperator: '<S7>/Relational Operator'
      */
     if (EncoderCounterHasOverflowed) {
-    	EncoderCounterHasOverflowed = 0;
-      /* Outputs for IfAction SubSystem: '<S3>/CounterHasOverflowed' incorporates:
-       *  ActionPort: '<S6>/Action Port'
-       */
-      /* Outputs for Enabled SubSystem: '<S6>/underflow case' incorporates:
-       *  EnablePort: '<S9>/Enable'
-       */
-      if (EncoderCounter > ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i) {
-        /* Sum: '<S9>/Add4' incorporates:
-         *  Constant: '<S9>/MaxVal'
-         *  Sum: '<S9>/Add3'
-         */
-        ConvertPWMtoAngle_B.Add4 = (uint16_T)((65535U - (uint16_T)EncoderCounter)
-          + (uint16_T)ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i);
+      uint32_T rtb_Switch_d;
 
-        /* Switch: '<S6>/Switch' */
-        rtb_Switch = ConvertPWMtoAngle_B.Add4;
-      } else {
-        /* Switch: '<S6>/Switch' incorporates:
-         *  Constant: '<S6>/MaxVal-1ToavoidOverflow'
-         *  Sum: '<S6>/Add'
-         *  Sum: '<S6>/Add1'
-         */
-        rtb_Switch = (uint32_T)(int16_T)((EncoderCounter -
-          ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i) + MAX_uint32_T);
-      }
-
-      /* End of Outputs for SubSystem: '<S6>/underflow case' */
-
-      /* Sum: '<S6>/Add2' incorporates:
-       *  Constant: '<S6>/Constant'
-       *  Inport: '<Root>/EncoderCounterIn'
-       *  Product: '<S6>/Product'
-       *  RelationalOperator: '<S6>/Relational Operator'
-       */
-      *rty_AnlgleMec = degresProCounter * (real32_T)rtb_Switch + *rtu_AngleMecIn;
-
-      if (*rty_AnlgleMec < 0) {
-
-    	  *rty_AnlgleMec = *rty_AnlgleMec + 6.28318548F;
-      }
-
-      /* End of Outputs for SubSystem: '<S3>/CounterHasOverflowed' */
-    } else {
-      /* Outputs for IfAction SubSystem: '<S3>/CounterIsInNoramlOperation' incorporates:
+      /* Outputs for IfAction SubSystem: '<S1>/CounterHasOverflowed' incorporates:
        *  ActionPort: '<S7>/Action Port'
        */
-      /* Sum: '<S7>/Add1' incorporates:
-       *  Constant: '<S7>/Constant'
-       *  Inport: '<Root>/EncoderCounterIn'
-       *  Product: '<S7>/Product'
-       *  Sum: '<S7>/Add'
+      /* DataStoreWrite: '<S7>/Data Store Write' incorporates:
+       *  Logic: '<S7>/NOT'
        */
-      *rty_AnlgleMec = (real32_T)(int16_T)((int16_T)EncoderCounter - (int16_T)
-        ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i) * degresProCounter +
-        *rtu_AngleMecIn;
+      EncoderCounterHasOverflowed = false;
 
-      if (*rty_AnlgleMec < 0) {
+      /* Outputs for Enabled SubSystem: '<S7>/underflow case' incorporates:
+       *  EnablePort: '<S10>/Enable'
+       */
+      if (EncoderCounter > ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m) {
+        /* Sum: '<S10>/Add4' incorporates:
+         *  Constant: '<S10>/MaxVal'
+         *  Sum: '<S10>/Add3'
+         */
+        ConvertPWMtoAngle_B.Add4 = (uint16_T)((uint16_T)((uint32_T)(uint16_T)
+          ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m - (uint16_T)EncoderCounter) +
+          65535U);
 
-          	  *rty_AnlgleMec = *rty_AnlgleMec + 6.28318548F;
-            }
+        /* Switch: '<S7>/Switch' */
+        rtb_Switch_d = ConvertPWMtoAngle_B.Add4;
+      } else {
+        /* Switch: '<S7>/Switch' incorporates:
+         *  Constant: '<S7>/MaxVal-1ToavoidOverflow'
+         *  Sum: '<S7>/Add'
+         *  Sum: '<S7>/Add1'
+         */
+        rtb_Switch_d = (uint32_T)(int16_T)((EncoderCounter -
+          ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m) + MAX_uint32_T);
+      }
 
-      /* End of Outputs for SubSystem: '<S3>/CounterIsInNoramlOperation' */
+      /* End of Outputs for SubSystem: '<S7>/underflow case' */
+
+      /* Sum: '<S7>/Add2' incorporates:
+       *  Constant: '<S7>/Constant'
+       *  Inport generated from: '<Root>/EncoderCounterIn'
+       *  Product: '<S7>/Product'
+       *  RelationalOperator: '<S7>/Relational Operator'
+       */
+      continuesAngle = (degresProCounter * (real32_T)rtb_Switch_d) +
+        (Sig_MechanicalAngle); //Sig_MechanicalAngle
+      initialAngle = ((real32_T)Angle_T[(4095U-Duty)] * 0.0009765625F );//+(pi/2);
+      /* End of Outputs for SubSystem: '<S1>/CounterHasOverflowed' */
+    } else {
+      /* Outputs for IfAction SubSystem: '<S1>/CounterIsInNoramlOperation' incorporates:
+       *  ActionPort: '<S8>/Action Port'
+       */
+      /* Sum: '<S8>/Add1' incorporates:
+       *  Constant: '<S8>/Constant'
+       *  Inport generated from: '<Root>/EncoderCounterIn'
+       *  Product: '<S8>/Product'
+       *  Sum: '<S8>/Add'
+       */
+      continuesAngle = (real32_T)((int16_T)((int16_T)EncoderCounter - (int16_T)
+        ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m) * degresProCounter) +
+        (Sig_MechanicalAngle);
+
+      /* End of Outputs for SubSystem: '<S1>/CounterIsInNoramlOperation' */
     }
 
-    /* End of If: '<S3>/If' */
+    /* End of If: '<S1>/If' */
 
-    /* Logic: '<S3>/NOT' incorporates:
-     *  Constant: '<S5>/Constant'
-     *  RelationalOperator: '<S5>/Compare'
-     *  UnitDelay: '<S3>/Unit Delay1'
+    /* Logic: '<S1>/NOT' incorporates:
+     *  Constant: '<S6>/Constant'
+     *  RelationalOperator: '<S6>/Compare'
+     *  UnitDelay: '<S1>/Unit Delay1'
      */
     ConvertPWMtoAngle_DW.UnitDelay1_DSTATE = !(ConvertPWMtoAngle_B.UnitDelay >
       0.0);
 
-    /* Update for UnitDelay: '<S3>/Unit Delay' incorporates:
-     *  Inport: '<Root>/EncoderCounterIn'
+    /* SignalConversion: '<S1>/Signal Copy' */
+    rtb_Merge = continuesAngle;
+    /* Update for UnitDelay: '<S1>/Unit Delay' incorporates:
+     *  Inport generated from: '<Root>/EncoderCounterIn'
      */
     ConvertPWMtoAngle_DW.UnitDelay_DSTATE_i = EncoderCounter;
 
-    /* End of Outputs for SubSystem: '<Root>/If Action Subsystem1' */
+    /* End of Outputs for SubSystem: '<Root>/Calculate angle from encoder sensor' */
   }
 
   /* End of If: '<Root>/If' */
@@ -207,15 +223,35 @@ void ConvertPWMtoAngle(const int16_T *rtu_qSollin, const boolean_T
    *  Constant: '<Root>/Constant1'
    *  Product: '<Root>/Product'
    */
-  *rty_AngleElec = fmodf((real32_T)polepairs * *rty_AnlgleMec, 6.28318548F);
+  *rty_AngleElec = rt_modf_snf((real32_T)polepairs * rtb_Merge, 6.28318548F);
 
-  /* Update for UnitDelay: '<S2>/Delay Input1'
+  /* Switch: '<Root>/Switch' incorporates:
+   *  Constant: '<Root>/Constant2'
+   *  Constant: '<S3>/Constant'
+   *  RelationalOperator: '<S3>/Compare'
+   *  Sum: '<Root>/Add'
+   */
+  if (rtb_Merge < 0.0F) {
+    *rty_AnlgleMec = rtb_Merge + 6.28318548F;
+  } else {
+    *rty_AnlgleMec = rtb_Merge;
+  }
+
+
+  /* End of Switch: '<Root>/Switch' */
+
+  /* Update for UnitDelay: '<S4>/Delay Input1'
    *
-   * Block description for '<S2>/Delay Input1':
+   * Block description for '<S4>/Delay Input1':
    *
    *  Store in Global RAM
    */
   ConvertPWMtoAngle_DW.DelayInput1_DSTATE = rtb_Compare;
+
+  /* Update for Switch: '<S1>/Switch' incorporates:
+   *  UnitDelay: '<Root>/Unit Delay'
+   */
+  ConvertPWMtoAngle_DW.UnitDelay_DSTATE_m = ConvertPWMtoAngle_B.EncoderCounterIn;
 }
 
 /* Model initialize function */

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 1.17
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Wed Nov  2 09:21:15 2022
+ * Model version                  : 7.4
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:27:38 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16,24 +16,25 @@
 #ifndef RTW_HEADER_ConvertPWMtoAngle_h_
 #define RTW_HEADER_ConvertPWMtoAngle_h_
 #ifndef ConvertPWMtoAngle_COMMON_INCLUDES_
-# define ConvertPWMtoAngle_COMMON_INCLUDES_
+#define ConvertPWMtoAngle_COMMON_INCLUDES_
 #include "rtwtypes.h"
 #endif                                 /* ConvertPWMtoAngle_COMMON_INCLUDES_ */
 
 #include "ConvertPWMtoAngle_types.h"
-
-/* Includes for objects with custom storage classes. */
-#include "PWMtoAngle_const.h"
-#include "ConstParams.h"
 #include "rtGetInf.h"
 #include "rt_nonfinite.h"
+
+/* Includes for objects with custom storage classes */
+#include "PWMtoAngle_const.h"
+#include "ConstParams.h"
 
 /* Block signals for model 'ConvertPWMtoAngle' */
 #ifndef ConvertPWMtoAngle_MDLREF_HIDE_CHILD_
 
 typedef struct {
-  real_T UnitDelay;                    /* '<S8>/Unit Delay' */
-  uint32_T Add4;                       /* '<S9>/Add4' */
+  real_T UnitDelay;                    /* '<S9>/Unit Delay' */
+  uint32_T Add4;                       /* '<S10>/Add4' */
+  uint32_T EncoderCounterIn;           /* '<S5>/EncoderCounterIn' */
 } B_ConvertPWMtoAngle_c_T;
 
 #endif                                 /*ConvertPWMtoAngle_MDLREF_HIDE_CHILD_*/
@@ -42,11 +43,11 @@ typedef struct {
 #ifndef ConvertPWMtoAngle_MDLREF_HIDE_CHILD_
 
 typedef struct {
-  real_T UnitDelay_DSTATE;             /* '<S8>/Unit Delay' */
+  real_T UnitDelay_DSTATE;             /* '<S9>/Unit Delay' */
   uint32_T UnitDelay_DSTATE_m;         /* '<Root>/Unit Delay' */
-  uint32_T UnitDelay_DSTATE_i;         /* '<S3>/Unit Delay' */
-  boolean_T DelayInput1_DSTATE;        /* '<S2>/Delay Input1' */
-  boolean_T UnitDelay1_DSTATE;         /* '<S3>/Unit Delay1' */
+  uint32_T UnitDelay_DSTATE_i;         /* '<S1>/Unit Delay' */
+  boolean_T DelayInput1_DSTATE;        /* '<S4>/Delay Input1' */
+  boolean_T UnitDelay1_DSTATE;         /* '<S1>/Unit Delay1' */
 } DW_ConvertPWMtoAngle_f_T;
 
 #endif                                 /*ConvertPWMtoAngle_MDLREF_HIDE_CHILD_*/
@@ -68,6 +69,17 @@ typedef struct {
 
 #endif                                 /*ConvertPWMtoAngle_MDLREF_HIDE_CHILD_*/
 
+/*
+ * Exported Global Signals
+ *
+ * Note: Exported global signals are block signals with an exported global
+ * storage class designation.  Code generation will declare the memory for
+ * these signals and export their symbols.
+ *
+ */
+extern real32_T continuesAngle;        /* '<S1>/Merge' */
+extern real32_T initialAngle;          /* '<S5>/Data Type Conversion' */
+extern real32_T  Sig_MechanicalAngle;
 extern void ConvertPWMtoAngle(const int16_T *rtu_qSollin, const boolean_T
   *rtu_detectStartUpin, const real32_T *rtu_AngleMecIn, real32_T *rty_AngleElec,
   real32_T *rty_AnlgleMec);
@@ -94,10 +106,8 @@ extern DW_ConvertPWMtoAngle_f_T ConvertPWMtoAngle_DW;
 /*-
  * These blocks were eliminated from the model due to optimizations:
  *
- * Block '<S7>/Constant1' : Unused code path elimination
- * Block '<S7>/Mod' : Unused code path elimination
- * Block '<S4>/Constant1' : Unused code path elimination
- * Block '<S4>/Mod' : Unused code path elimination
+ * Block '<S5>/Constant1' : Unused code path elimination
+ * Block '<S5>/Mod' : Unused code path elimination
  */
 
 /*-
@@ -115,15 +125,16 @@ extern DW_ConvertPWMtoAngle_f_T ConvertPWMtoAngle_DW;
  * Here is the system hierarchy for this model
  *
  * '<Root>' : 'ConvertPWMtoAngle'
- * '<S1>'   : 'ConvertPWMtoAngle/Compare To Constant'
- * '<S2>'   : 'ConvertPWMtoAngle/Detect Decrease'
- * '<S3>'   : 'ConvertPWMtoAngle/If Action Subsystem1'
- * '<S4>'   : 'ConvertPWMtoAngle/Subsystem'
- * '<S5>'   : 'ConvertPWMtoAngle/If Action Subsystem1/Compare To Constant'
- * '<S6>'   : 'ConvertPWMtoAngle/If Action Subsystem1/CounterHasOverflowed'
- * '<S7>'   : 'ConvertPWMtoAngle/If Action Subsystem1/CounterIsInNoramlOperation'
- * '<S8>'   : 'ConvertPWMtoAngle/If Action Subsystem1/EnableOnFirstExec'
- * '<S9>'   : 'ConvertPWMtoAngle/If Action Subsystem1/CounterHasOverflowed/underflow case'
+ * '<S1>'   : 'ConvertPWMtoAngle/Calculate angle from encoder sensor'
+ * '<S2>'   : 'ConvertPWMtoAngle/Compare To Constant'
+ * '<S3>'   : 'ConvertPWMtoAngle/Compare To Constant1'
+ * '<S4>'   : 'ConvertPWMtoAngle/Detect Decrease'
+ * '<S5>'   : 'ConvertPWMtoAngle/Initialize angle from PWM sensor'
+ * '<S6>'   : 'ConvertPWMtoAngle/Calculate angle from encoder sensor/Compare To Constant'
+ * '<S7>'   : 'ConvertPWMtoAngle/Calculate angle from encoder sensor/CounterHasOverflowed'
+ * '<S8>'   : 'ConvertPWMtoAngle/Calculate angle from encoder sensor/CounterIsInNoramlOperation'
+ * '<S9>'   : 'ConvertPWMtoAngle/Calculate angle from encoder sensor/EnableOnFirstExec'
+ * '<S10>'  : 'ConvertPWMtoAngle/Calculate angle from encoder sensor/CounterHasOverflowed/underflow case'
  */
 #endif                                 /* RTW_HEADER_ConvertPWMtoAngle_h_ */
 
