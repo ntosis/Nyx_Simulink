@@ -1,20 +1,20 @@
 /*
  * const_params.c
  *
- * Code generation for model "MotorControlLibNEWFixedP_FULL19b".
+ * Code generation for model "MotorControlLib".
  *
- * Model version              : 1.0
- * Simulink Coder version : 9.2 (R2019b) 18-Jul-2019
- * C source code generated on : Tue Feb 15 20:50:32 2022
+ * Model version              : 3.56
+ * Simulink Coder version : 9.8 (R2022b) 13-May-2022
+ * C source code generated on : Mon Nov 28 17:30:35 2022
  */
 #include "rtwtypes.h"
 
-extern const boolean_T rtCP_pooled_h9SS684EhrQx[16];
-const boolean_T rtCP_pooled_h9SS684EhrQx[16] = { 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1,
-  1, 0, 0, 0, 0 } ;
+extern const boolean_T rtCP_pooled_2ukhhMbQGsh4[16];
+const boolean_T rtCP_pooled_2ukhhMbQGsh4[16] = { false, true, true, false, false,
+  true, false, true, true, false, true, false, false, false, false, false } ;
 
-extern const real32_T rtCP_pooled_ixJ5snPtuZfQ[502];
-const real32_T rtCP_pooled_ixJ5snPtuZfQ[502] = { 0.0F, 0.0157073177F,
+extern const real32_T rtCP_pooled_TqtEl1bYGCPz[502];
+const real32_T rtCP_pooled_TqtEl1bYGCPz[502] = { 0.0F, 0.0157073177F,
   0.0314107575F, 0.0471064523F, 0.0627905205F, 0.0784591F, 0.0941083133F,
   0.109734312F, 0.125333235F, 0.140901238F, 0.156434461F, 0.171929106F,
   0.187381312F, 0.202787295F, 0.21814324F, 0.233445361F, 0.24868989F,

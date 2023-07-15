@@ -3,3 +3,9 @@
 local_pmsm*
 MotorControlLibData.m
 slprj
+SimulinkModels/Test/testFrame_debugUnstableBehavior.slx
+SimulinkModels/Test/slprj/
+SimulinkModels/slprj/
+SimulinkModels/utils/
+*/**/*simout.mat
+*/**/BaseWork*.mat

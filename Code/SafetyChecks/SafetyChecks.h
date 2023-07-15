@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'SafetyChecks'.
  *
- * Model version                  : 1.2
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:42:20 2022
+ * Model version                  : 5.2
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:33 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -15,9 +15,8 @@
 
 #ifndef RTW_HEADER_SafetyChecks_h_
 #define RTW_HEADER_SafetyChecks_h_
-#include <math.h>
 #ifndef SafetyChecks_COMMON_INCLUDES_
-# define SafetyChecks_COMMON_INCLUDES_
+#define SafetyChecks_COMMON_INCLUDES_
 #include "rtwtypes.h"
 #endif                                 /* SafetyChecks_COMMON_INCLUDES_ */
 
@@ -26,6 +25,7 @@
 /* Block states (default storage) for model 'SafetyChecks' */
 typedef struct {
   uint16_T UnitDelay1_DSTATE;          /* '<S4>/Unit Delay1' */
+  boolean_T delayerrorreaction_MODE;   /* '<Root>/delay error reaction' */
 } DW_SafetyChecks_f_T;
 
 /* Real-time Model Data Structure */
@@ -51,12 +51,13 @@ extern uint16_T MaximumCurrentBeforeReaction;/* Variable: MaximumCurrentBeforeRe
                                               *   '<S1>/Constant'
                                               *   '<S2>/Constant'
                                               *   '<S3>/Constant'
-                                              * Maximum current limit before softare shutdowns the mosfets.
+                                              * Maximum current limit before software shutdowns the mosfets.
                                               */
 
 /* Model reference registration function */
 extern void SafetyChecks_initialize(const char_T **rt_errorStatus,
   RT_MODEL_SafetyChecks_T *const SafetyChecks_M);
+extern void SafetyChecks_Disable(DW_SafetyChecks_f_T *localDW);
 extern void SafetyChecks(const real32_T rtu_Iab[2], DW_SafetyChecks_f_T *localDW);
 
 /*-

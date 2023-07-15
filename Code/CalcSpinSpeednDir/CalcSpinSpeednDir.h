@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'CalcSpinSpeednDir'.
  *
- * Model version                  : 1.1
+ * Model version                  : 1.0
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:41:56 2022
+ * C/C++ source code generated on : Mon Apr 11 17:09:17 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -15,6 +15,7 @@
 
 #ifndef RTW_HEADER_CalcSpinSpeednDir_h_
 #define RTW_HEADER_CalcSpinSpeednDir_h_
+#include <math.h>
 #ifndef CalcSpinSpeednDir_COMMON_INCLUDES_
 # define CalcSpinSpeednDir_COMMON_INCLUDES_
 #include "rtwtypes.h"
@@ -24,36 +25,39 @@
 
 /* Includes for objects with custom storage classes. */
 #include "ConstParams.h"
+#include "rt_nonfinite.h"
+#include "rtGetInf.h"
 
-/* Block signals for model 'CalcSpinSpeednDir' */
-typedef struct {
-  real_T setOutput;                    /* '<Root>/Chart1' */
-} B_CalcSpinSpeednDir_c_T;
+/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+# define rtmGetErrorStatus(rtm)        ((rtm)->errorStatus)
+#endif
 
-/* Block states (default storage) for model 'CalcSpinSpeednDir' */
+#ifndef rtmSetErrorStatus
+# define rtmSetErrorStatus(rtm, val)   ((rtm)->errorStatus = (val))
+#endif
+
+/* Block states (default storage) for system '<Root>' */
 typedef struct {
-  real32_T TappedDelay1_X[3];          /* '<S2>/Tapped Delay1' */
-  real32_T UnitDelay1_DSTATE;          /* '<Root>/Unit Delay1' */
-  real32_T UnitDelay2_DSTATE;          /* '<Root>/Unit Delay2' */
-  real32_T PrevY;                      /* '<Root>/Rate Limiter' */
-  uint8_T is_active_c7_CalcSpinSpeednDir;/* '<Root>/Chart1' */
-  uint8_T is_c7_CalcSpinSpeednDir;     /* '<Root>/Chart1' */
-  uint8_T is_InvalidSignal;            /* '<Root>/Chart1' */
-  uint8_T is_noTimeout;                /* '<Root>/Chart1' */
-  uint8_T count;                       /* '<Root>/Chart1' */
-} DW_CalcSpinSpeednDir_f_T;
+  real32_T UnitDelay_DSTATE;           /* '<Root>/Unit Delay' */
+} DW_CalcSpinSpeednDir_T;
+
+/* External inputs (root inport signals with default storage) */
+typedef struct {
+  real32_T Thetael;                    /* '<Root>/Theta el' */
+} ExtU_CalcSpinSpeednDir_T;
 
 /* Real-time Model Data Structure */
 struct tag_RTM_CalcSpinSpeednDir_T {
-  const char_T **errorStatus;
+  const char_T * volatile errorStatus;
 };
 
-typedef struct {
-  B_CalcSpinSpeednDir_c_T rtb;
-  DW_CalcSpinSpeednDir_f_T rtdw;
-  RT_MODEL_CalcSpinSpeednDir_T rtm;
-} MdlrefDW_CalcSpinSpeednDir_T;
+/* Block states (default storage) */
+extern DW_CalcSpinSpeednDir_T CalcSpinSpeednDir_DW;
 
+/* External inputs (root inport signals with default storage) */
+extern ExtU_CalcSpinSpeednDir_T CalcSpinSpeednDir_U;
+extern real32_T Sig_Theta_el_cont_m;
 /*
  * Exported Global Signals
  *
@@ -62,14 +66,16 @@ typedef struct {
  * these signals and export their symbols.
  *
  */
-extern real32_T Sig_rpm;               /* '<Root>/Switch1' */
+extern real32_T Sig_rpm;               /* '<Root>/Switch' */
 extern real32_T Sig_Angular_Velocity_radpsec_m;/* '<Root>/Unit Conversion1' */
 
-/* Model reference registration function */
-extern void CalcSpinSpeednDir_initialize(const char_T **rt_errorStatus,
-  RT_MODEL_CalcSpinSpeednDir_T *const CalcSpinSpeednDir_M);
-extern void CalcSpinSpeednDir(const real32_T *rtu_Theta, B_CalcSpinSpeednDir_c_T
-  *localB, DW_CalcSpinSpeednDir_f_T *localDW);
+/* Model entry point functions */
+extern void CalcSpinSpeednDir_initialize(void);
+extern void CalcSpinSpeednDir_step(void);
+extern void CalcSpinSpeednDir_terminate(void);
+
+/* Real-time Model object */
+extern RT_MODEL_CalcSpinSpeednDir_T *const CalcSpinSpeednDir_M;
 
 /*-
  * The generated code includes comments that allow you to trace directly
@@ -86,13 +92,7 @@ extern void CalcSpinSpeednDir(const real32_T *rtu_Theta, B_CalcSpinSpeednDir_c_T
  * Here is the system hierarchy for this model
  *
  * '<Root>' : 'CalcSpinSpeednDir'
- * '<S1>'   : 'CalcSpinSpeednDir/Chart1'
- * '<S2>'   : 'CalcSpinSpeednDir/Detect direction '
- * '<S3>'   : 'CalcSpinSpeednDir/Detect direction /Compare To Constant1'
- * '<S4>'   : 'CalcSpinSpeednDir/Detect direction /Compare To Zero'
- * '<S5>'   : 'CalcSpinSpeednDir/Detect direction /Compare To Zero1'
- * '<S6>'   : 'CalcSpinSpeednDir/Detect direction /Compare To Zero2'
- * '<S7>'   : 'CalcSpinSpeednDir/Detect direction /Compare To Zero5'
+ * '<S1>'   : 'CalcSpinSpeednDir/Compare To Zero'
  */
 #endif                                 /* RTW_HEADER_CalcSpinSpeednDir_h_ */
 

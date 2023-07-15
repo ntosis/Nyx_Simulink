@@ -1,11 +1,11 @@
 /*
  * File: PWMtoAngle_const.c
  *
- * Code generated for Simulink model 'ConvertPWMtoAngle'.
+ * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.5
+ * Model version                  : 1.2
  * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Nov  2 10:54:19 2021
+ * C/C++ source code generated on : Fri Oct 28 10:27:56 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14,7 +14,8 @@
  */
 
 #include "rtwtypes.h"
-#include "ConvertPWMtoAngle_types.h"
+#include "zero_crossing_types.h"
+#include "MotorControlLib_types.h"
 
 /* Exported data definition */
 
@@ -326,7 +327,6 @@ const int16_T Angle_T[4096] = { 0, 2, 3, 5, 6, 8, 9, 11, 13, 14, 16, 17, 19, 20,
   6381, 6383, 6384, 6386, 6387, 6389, 6391, 6392, 6394, 6395, 6397, 6398, 6400,
   6402, 6403, 6405, 6406, 6408, 6409, 6411, 6413, 6414, 6416, 6417, 6419, 6420,
   6422, 6424, 6425, 6427, 6428 } ;
-                         /* Referenced by: '<Root>/Direct Lookup Table (n-D)' */
 
 /*
  * File trailer for generated code.

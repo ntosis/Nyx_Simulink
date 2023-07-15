@@ -2,7 +2,7 @@ name: BuildSimulinkLib
 
 on:
   push:
-    branches: [ master ] # set the trigger and the name of the bracnh
+    branches: [ feature_br_1 ] # set the trigger and the name of the bracnh
   pull_request:
     branches: [ master ]
 

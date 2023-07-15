@@ -1,18 +1,17 @@
 /*
  * File: rtGetNaN.c
  *
- * Code generated for Simulink model 'MotorControlLibNEWFixedP_FULL19b'.
+ * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 1.0
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:50:32 2022
+ * Model version                  : 7.3
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:27 2022
  */
 
-/*
- * Abstract:
- *      Function to initialize non-finite, NaN
- */
+#include "rtwtypes.h"
 #include "rtGetNaN.h"
+#include <stddef.h>
+#include "rt_nonfinite.h"
 #define NumBitsPerChar                 8U
 
 /*
@@ -45,7 +44,7 @@ real_T rtGetNaN(void)
  */
 real32_T rtGetNaNF(void)
 {
-  IEEESingle nanF = { { 0 } };
+  IEEESingle nanF = { { 0.0F } };
 
   nanF.wordL.wordLuint = 0xFFC00000U;
   return nanF.wordL.wordLreal;

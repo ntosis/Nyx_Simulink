@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 1.5
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Nov  2 10:54:19 2021
+ * Model version                  : 7.4
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:27:38 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16,6 +16,7 @@
 #ifndef RTW_HEADER_ConvertPWMtoAngle_private_h_
 #define RTW_HEADER_ConvertPWMtoAngle_private_h_
 #include "rtwtypes.h"
+#include "ConvertPWMtoAngle_types.h"
 #ifndef UCHAR_MAX
 #include <limits.h>
 #endif
@@ -64,8 +65,29 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
+/* Macros for accessing real-time model data structure */
+#ifndef rtmGetErrorStatus
+#define rtmGetErrorStatus(rtm)         (*((rtm)->errorStatus))
+#endif
+
+#ifndef rtmSetErrorStatus
+#define rtmSetErrorStatus(rtm, val)    (*((rtm)->errorStatus) = (val))
+#endif
+
+#ifndef rtmGetErrorStatusPointer
+#define rtmGetErrorStatusPointer(rtm)  (rtm)->errorStatus
+#endif
+
+#ifndef rtmSetErrorStatusPointer
+#define rtmSetErrorStatusPointer(rtm, val) ((rtm)->errorStatus = (val))
+#endif
+
 /* Imported (extern) block signals */
-extern uint16_T Duty;                  /* '<Root>/Input' */
+extern uint16_T Duty;                  /* '<Root>/DutyIn' */
+extern uint32_T EncoderCounter;        /* '<Root>/EncoderCounterIn' */
+
+/* Imported (extern) states */
+extern boolean_T EncoderCounterHasOverflowed;/* '<S1>/Data Store Memory' */
 
 #endif                             /* RTW_HEADER_ConvertPWMtoAngle_private_h_ */
 

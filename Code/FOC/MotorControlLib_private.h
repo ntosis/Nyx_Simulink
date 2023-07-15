@@ -1,11 +1,11 @@
 /*
- * File: MotorControlLibNEWFixedP_FULL19b_private.h
+ * File: MotorControlLib_private.h
  *
- * Code generated for Simulink model 'MotorControlLibNEWFixedP_FULL19b'.
+ * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.0
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:50:32 2022
+ * Model version                  : 3.57
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Fri Dec  2 11:08:00 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13,13 +13,13 @@
  * Validation result: Not run
  */
 
-#ifndef RTW_HEADER_MotorControlLibNEWFixedP_FULL19b_private_h_
-#define RTW_HEADER_MotorControlLibNEWFixedP_FULL19b_private_h_
+#ifndef RTW_HEADER_MotorControlLib_private_h_
+#define RTW_HEADER_MotorControlLib_private_h_
 #include "rtwtypes.h"
-#include "zero_crossing_types.h"
-#include "MotorControlLibNEWFixedP_FULL19b.h"
+#include "MotorControlLib.h"
+#include "MotorControlLib_types.h"
 
-/* Includes for objects with custom storage classes. */
+/* Includes for objects with custom storage classes */
 #include "InterfaceBswApp.h"
 #ifndef UCHAR_MAX
 #include <limits.h>
@@ -69,42 +69,30 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
-extern const real32_T rtCP_pooled_ixJ5snPtuZfQ[502];
-extern const boolean_T rtCP_pooled_h9SS684EhrQx[16];
+extern const real32_T rtCP_pooled_TqtEl1bYGCPz[502];
+extern const boolean_T rtCP_pooled_2ukhhMbQGsh4[16];
 
-#define rtCP_sine_table_values_Value   rtCP_pooled_ixJ5snPtuZfQ  /* Computed Parameter: rtCP_sine_table_values_Value
-                                                                  * Referenced by: '<S11>/sine_table_values'
+#define rtCP_sine_table_values_Value   rtCP_pooled_TqtEl1bYGCPz  /* Computed Parameter: rtCP_sine_table_values_Value
+                                                                  * Referenced by: '<S9>/sine_table_values'
                                                                   */
-#define rtCP_Logic_table               rtCP_pooled_h9SS684EhrQx  /* Computed Parameter: rtCP_Logic_table
-                                                                  * Referenced by: '<S142>/Logic'
+#define rtCP_Logic_table               rtCP_pooled_2ukhhMbQGsh4  /* Computed Parameter: rtCP_Logic_table
+                                                                  * Referenced by: '<S135>/Logic'
                                                                   */
-#define rtCP_Logic_table_m             rtCP_pooled_h9SS684EhrQx  /* Computed Parameter: rtCP_Logic_table_m
-                                                                  * Referenced by: '<S143>/Logic'
+#define rtCP_Logic_table_m             rtCP_pooled_2ukhhMbQGsh4  /* Computed Parameter: rtCP_Logic_table_m
+                                                                  * Referenced by: '<S136>/Logic'
                                                                   */
 
-extern void MotorControlLibNEWFi_DQ_Limiter(real32_T rtu_Vd_ref, real32_T
-  rtu_Vq_ref, real32_T rty_Vd_sat[2], real32_T *rty_Vmax_unsat, real32_T
-  rtp_Vmax);
-extern void MotorControlLibNEW_FluxObsAngle(boolean_T rtu_Enable, real32_T
-  rtu_In1, real32_T rtu_In2, real32_T rtu_In3, real32_T rtu_In4, real32_T
-  *rty_FluxObsAngle, B_FluxObsAngle_MotorControlLi_T *localB, const
-  ConstB_FluxObsAngle_MotorCont_T *localC, DW_FluxObsAngle_MotorControlL_T
-  *localDW, ZCE_FluxObsAngle_MotorControl_T *localZCE);
-extern void MotorControlLibNE_PI_Controller(int8_T rtu_dRef, real32_T rtu_qRef,
-  real32_T rtu_In5, real32_T rtu_In6, boolean_T rtu_Inport6, real32_T *rty_d,
-  real32_T *rty_q, DW_PI_Controller_MotorControl_T *localDW);
-extern void MotorCon_Positionobserver_Reset(DW_Positionobserver_MotorCont_T
-  *localDW);
-extern void MotorC_Positionobserver_Disable(DW_Positionobserver_MotorCont_T
-  *localDW);
-extern void MotorControlLi_Positionobserver(RT_MODEL_MotorControlLibNEWFi_T *
-  const MotorControlLibNEWFixedP_FUL_M, boolean_T rtu_Enable, real32_T rtu_Va,
-  real32_T rtu_Vb, real32_T rtu_Ia, real32_T rtu_Ib, boolean_T rtu_In5, real32_T
-  *rty_theta, B_Positionobserver_MotorContr_T *localB,
-  DW_Positionobserver_MotorCont_T *localDW, ZCE_Positionobserver_MotorCon_T
-  *localZCE);
+/* Imported (extern) block signals */
+extern uint32_T EncoderCounter;        /* '<Root>/Input1' */
+extern uint16_T Duty;                  /* '<Root>/Input' */
+extern void MotorControlLib_DQ_Limiter(real32_T rtu_Vd_ref, real32_T rtu_Vq_ref,
+  real32_T rty_Vd_sat[2], real32_T *rty_Vmax_unsat, int16_T rtp_Vmax);
+extern void MotorControlLib_PIDAxis_Init(DW_PIDAxis_MotorControlLib_T *localDW);
+extern real32_T MotorControlLib_PIDAxis(real32_T rtu_error, real32_T rtu_P,
+  real32_T rtu_I, boolean_T rtu_Reset, real32_T rtu_init,
+  DW_PIDAxis_MotorControlLib_T *localDW);
 
-#endif              /* RTW_HEADER_MotorControlLibNEWFixedP_FULL19b_private_h_ */
+#endif                               /* RTW_HEADER_MotorControlLib_private_h_ */
 
 /*
  * File trailer for generated code.

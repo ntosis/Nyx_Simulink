@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ADCRawToIab'.
  *
- * Model version                  : 1.3
- * Simulink Coder version         : 9.2 (R2019b) 18-Jul-2019
- * C/C++ source code generated on : Tue Feb 15 20:41:18 2022
+ * Model version                  : 7.2
+ * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
+ * C/C++ source code generated on : Mon Nov 28 17:26:23 2022
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -15,15 +15,14 @@
 
 #ifndef RTW_HEADER_ADCRawToIab_h_
 #define RTW_HEADER_ADCRawToIab_h_
-#include <math.h>
 #ifndef ADCRawToIab_COMMON_INCLUDES_
-# define ADCRawToIab_COMMON_INCLUDES_
+#define ADCRawToIab_COMMON_INCLUDES_
 #include "rtwtypes.h"
 #endif                                 /* ADCRawToIab_COMMON_INCLUDES_ */
 
 #include "ADCRawToIab_types.h"
 
-/* Includes for objects with custom storage classes. */
+/* Includes for objects with custom storage classes */
 #include "ConstParams.h"
 
 /* Real-time Model Data Structure */

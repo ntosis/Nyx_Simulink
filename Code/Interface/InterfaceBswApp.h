@@ -43,7 +43,7 @@ extern uint8_t StepFunctionisStillRunning;
 extern volatile uint32_t clocksNeededOfMAtlabFunc;
 extern volatile uint32_t clocksNeededOfMAtlabFuncMAX;
 extern volatile uint32_t clocksNeededOfMAtlabFuncMIN;
-
+extern volatile uint16_t PWMdbg[3];
 
 
 struct CPU_clocks {
