@@ -16,7 +16,6 @@ jobs:
     name: Build-the-Simulink-library
     # use Ubuntu on the runner
     runs-on: ubuntu-18.04
-    if: ${{ contains(github.event.paths, 'Code/') }}
       
     steps:
     - uses: actions/checkout@v2
