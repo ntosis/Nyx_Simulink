@@ -17,6 +17,7 @@
 #include "rtwtypes.h"
 #include "MotorControlLib_types.h"
 
+
 /* Exported data definition */
 
 /* Const memory section */
