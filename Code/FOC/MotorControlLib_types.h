@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 3.57
+ * Model version                  : 3.74
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Dec  2 11:08:00 2022
+ * C/C++ source code generated on : Mon Jun 26 15:58:26 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
