@@ -3,12 +3,8 @@ name: BuildSimulinkLib
 on:
   push:
     branches: [ master ] # set the trigger and the name of the branch
-    paths: 
-      -'Code/**' # build lib when the folder has changes.
   pull_request:
     branches: [ master ]
-    paths: 
-      -'Code/**' # build lib when the folder has changes.
 
 jobs:
   build:
