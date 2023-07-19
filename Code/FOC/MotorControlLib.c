@@ -28,6 +28,7 @@
 const int16_T MotorControlLib_sfix16_En8_GND = 0;/* int16_T ground */
 
 /* Exported block signals */
+
 boolean_T resetPIIntegratorDQ;         /* '<Root>/Inport6' */
 boolean_T enableFluxObs;               /* '<Root>/Inport2' */
 uint8_T set_AngleInput;                /* '<Root>/Inport1' */
