@@ -2,15 +2,21 @@ name: BuildSimulinkLib
 
 on:
   push:
-    branches: [ feature_br_1 ] # set the trigger and the name of the bracnh
+    branches: 
+      [ master ] # set the trigger and the name of the branch
+    paths: 
+      -'Code/**' # build lib when the folder has changes.
   pull_request:
     branches: [ master ]
+    paths: 
+      -'Code/**' # build lib when the folder has changes.
 
 jobs:
   build:
     name: Build-the-Simulink-library
     # use Ubuntu on the runner
     runs-on: ubuntu-18.04
+    if: ${{ contains(github.event.paths, 'Code/') }}
       
     steps:
     - uses: actions/checkout@v2
