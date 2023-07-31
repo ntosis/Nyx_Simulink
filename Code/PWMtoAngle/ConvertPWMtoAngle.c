@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 7.11
+ * Model version                  : 3.1
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jun 26 15:57:35 2023
+ * C/C++ source code generated on : Mon Jul 31 09:55:56 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -34,17 +34,6 @@ B_ConvertPWMtoAngle_c_T ConvertPWMtoAngle_B;
 DW_ConvertPWMtoAngle_f_T ConvertPWMtoAngle_DW;
 
 /*
- * System initialize for atomic system:
- *    '<S1>/isTheFirstExec'
- *    '<Root>/isTheFirstExec'
- */
-void ConvertPWMt_isTheFirstExec_Init(DW_isTheFirstExec_ConvertPWMt_T *localDW)
-{
-  /* InitializeConditions for UnitDelay: '<S9>/Unit Delay1' */
-  localDW->UnitDelay1_DSTATE = true;
-}
-
-/*
  * Output and update for atomic system:
  *    '<S1>/isTheFirstExec'
  *    '<Root>/isTheFirstExec'
@@ -52,62 +41,73 @@ void ConvertPWMt_isTheFirstExec_Init(DW_isTheFirstExec_ConvertPWMt_T *localDW)
 boolean_T ConvertPWMtoAngl_isTheFirstExec(DW_isTheFirstExec_ConvertPWMt_T
   *localDW)
 {
-  boolean_T rty_startUp_0;
+  int32_T tmp;
+  uint8_T rtb_UnitDelay_o;
 
-  /* UnitDelay: '<S9>/Unit Delay1' */
-  rty_startUp_0 = localDW->UnitDelay1_DSTATE;
+  /* UnitDelay: '<S9>/Unit Delay' */
+  rtb_UnitDelay_o = localDW->UnitDelay_DSTATE;
 
-  /* Update for UnitDelay: '<S9>/Unit Delay1' incorporates:
-   *  Constant: '<S9>/Constant1'
+  /* Sum: '<S9>/Add' incorporates:
+   *  Constant: '<S9>/Constant'
+   *  UnitDelay: '<S9>/Unit Delay'
    */
-  localDW->UnitDelay1_DSTATE = false;
-  return rty_startUp_0;
-}
+  tmp = (int32_T)(localDW->UnitDelay_DSTATE + 1U);
+  if (localDW->UnitDelay_DSTATE + 1U > 255U) {
+    tmp = 255;
+  }
 
-/* System initialize for referenced model: 'ConvertPWMtoAngle' */
-void ConvertPWMtoAngle_Init(void)
-{
-  /* SystemInitialize for Atomic SubSystem: '<Root>/isTheFirstExec' */
-  ConvertPWMt_isTheFirstExec_Init(&ConvertPWMtoAngle_DW.isTheFirstExec);
+  localDW->UnitDelay_DSTATE = (uint8_T)tmp;
 
-  /* End of SystemInitialize for SubSystem: '<Root>/isTheFirstExec' */
+  /* End of Sum: '<S9>/Add' */
 
-  /* SystemInitialize for IfAction SubSystem: '<Root>/Calculate angle from encoder sensor' */
-  /* SystemInitialize for Atomic SubSystem: '<S1>/isTheFirstExec' */
-  ConvertPWMt_isTheFirstExec_Init(&ConvertPWMtoAngle_DW.isTheFirstExec_k);
-
-  /* End of SystemInitialize for SubSystem: '<S1>/isTheFirstExec' */
-  /* End of SystemInitialize for SubSystem: '<Root>/Calculate angle from encoder sensor' */
+  /* RelationalOperator: '<S11>/Compare' incorporates:
+   *  Constant: '<S11>/Constant'
+   */
+  return rtb_UnitDelay_o == 0;
 }
 
 /* Output and update for referenced model: 'ConvertPWMtoAngle' */
-void ConvertPWMtoAngle(const int16_T *rtu_qSollin, const real32_T
+void ConvertPWMtoAngle(const boolean_T *rtu_UsersInputIsNull, const real32_T
   *rtu_AngleMecIn, real32_T *rty_AngleElec, real32_T *rty_AnlgleMec)
 {
   boolean_T rtb_Compare;
-  boolean_T rtb_isTheFirstStepAfterReset;
-  boolean_T rtb_isTheFirstStepAfterReset_g;
+  boolean_T rtb_Compare_b;
+  boolean_T rtb_FixPtRelationalOperator;
 
   /* RelationalOperator: '<S2>/Compare' */
-  rtb_Compare = (*rtu_qSollin == 0);
+  rtb_Compare = !*rtu_UsersInputIsNull;
 
-  /* Outputs for Atomic SubSystem: '<Root>/isTheFirstExec' */
-  rtb_isTheFirstStepAfterReset = ConvertPWMtoAngl_isTheFirstExec
-    (&ConvertPWMtoAngle_DW.isTheFirstExec);
-
-  /* End of Outputs for SubSystem: '<Root>/isTheFirstExec' */
-
-  /* If: '<Root>/If' incorporates:
-   *  Logic: '<Root>/OR'
-   *  RelationalOperator: '<S4>/FixPt Relational Operator'
+  /* RelationalOperator: '<S4>/FixPt Relational Operator' incorporates:
    *  UnitDelay: '<S4>/Delay Input1'
    *
    * Block description for '<S4>/Delay Input1':
    *
    *  Store in Global RAM
    */
-  if (((int32_T)rtb_Compare < (int32_T)ConvertPWMtoAngle_DW.DelayInput1_DSTATE) ||
-      rtb_isTheFirstStepAfterReset) {
+  rtb_FixPtRelationalOperator = ((int32_T)rtb_Compare < (int32_T)
+    ConvertPWMtoAngle_DW.DelayInput1_DSTATE);
+
+  /* Outputs for Atomic SubSystem: '<Root>/isTheFirstExec' */
+  /* UnitDelay: '<S4>/Delay Input1'
+   *
+   * Block description for '<S4>/Delay Input1':
+   *
+   *  Store in Global RAM
+   */
+  ConvertPWMtoAngle_DW.DelayInput1_DSTATE = ConvertPWMtoAngl_isTheFirstExec
+    (&ConvertPWMtoAngle_DW.isTheFirstExec);
+
+  /* End of Outputs for SubSystem: '<Root>/isTheFirstExec' */
+
+  /* If: '<Root>/If' incorporates:
+   *  Logic: '<Root>/OR'
+   *  UnitDelay: '<S4>/Delay Input1'
+   *
+   * Block description for '<S4>/Delay Input1':
+   *
+   *  Store in Global RAM
+   */
+  if (rtb_FixPtRelationalOperator || ConvertPWMtoAngle_DW.DelayInput1_DSTATE) {
     uint16_T tmp;
 
     /* Outputs for IfAction SubSystem: '<Root>/Initialize angle from PWM sensor' incorporates:
@@ -153,13 +153,13 @@ void ConvertPWMtoAngle(const int16_T *rtu_qSollin, const real32_T
      *  ActionPort: '<S1>/Action Port'
      */
     /* Outputs for Atomic SubSystem: '<S1>/isTheFirstExec' */
-    rtb_isTheFirstStepAfterReset_g = ConvertPWMtoAngl_isTheFirstExec
+    rtb_Compare_b = ConvertPWMtoAngl_isTheFirstExec
       (&ConvertPWMtoAngle_DW.isTheFirstExec_k);
 
     /* End of Outputs for SubSystem: '<S1>/isTheFirstExec' */
 
     /* Switch: '<S1>/Switch' */
-    if (rtb_isTheFirstStepAfterReset_g) {
+    if (rtb_Compare_b) {
       /* Switch: '<S1>/Switch' incorporates:
        *  UnitDelay: '<Root>/Unit Delay'
        */
