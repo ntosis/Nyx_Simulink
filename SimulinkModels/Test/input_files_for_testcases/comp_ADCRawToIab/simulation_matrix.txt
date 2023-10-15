@@ -1,0 +1,2 @@
+signalEditorFileName Scenario GainValue resultDataFileName simulationTime modelName busObj
+current_input_-30to30Amp.mat Scenario1 20 results_ADCRawToIab_sz1_10sec.mat 30 testFrame_ADCRawToIab.slx bus_testcs_ADCRawToIab_outputIaIb.mat

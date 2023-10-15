@@ -1,0 +1,3 @@
+resultDataFileName simulationTime modelName
+results_detectStartUp_5sec.mat 5 testFrame_rf_sbstm_detectStartUp.slx
+results_disable_integrator_on_start_up_30sec.mat 30 testFrame_rf_sbstm_disable_integrator_on_start_up.slx
