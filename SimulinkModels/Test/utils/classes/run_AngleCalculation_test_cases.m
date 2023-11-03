@@ -1,4 +1,4 @@
-classdef run_ADCRawToIab_test_cases
+classdef run_AngleCalculation_test_cases
     properties
         model
         file % File with three columns
@@ -9,31 +9,27 @@ classdef run_ADCRawToIab_test_cases
     end
     
     methods
-        function obj = run_ADCRawToIab_test_cases(file)
+        function obj = run_AngleCalculation_test_cases(file)
             
             obj.file = file;
             obj.success = true;
             obj.data = readtable(obj.file, 'Delimiter', ' ','Format', ...
-                "%s%s%d%s%d%s%s",'VariableNamingRule','preserve'); % space-separated
+                "%s%s%s%s%d%s%s",'VariableNamingRule','preserve'); % space-separated
             obj.model=obj.data.modelName{1};
         end
         
         function runSimulations(obj)
             open_system(obj.model);
             for i = 1:height(obj.data)
-                signalEditorInputFile=obj.data.signalEditorFileName{i};
-                scenario = obj.data.Scenario{i};
-                gain = obj.data.GainValue(i); %% use parenthesis becuase format is %d for this column
-                outputFileName = obj.data.resultDataFileName{i};
+                
+                
                 time = uint32(obj.data.simulationTime(i));
                 %load bus Obj
-                load(obj.data.busObj{i})
-                % Find the signal editor block and set the scenario name
-                obj.setScenarioName(scenario,signalEditorInputFile);
-                % Find the DRV_GAIN block and set the gain value
-                obj.setGainValue(gain);                
+                obj.loadBus(obj.data.busObj{i})                
+                % Find the ManualSwitch and set
+                obj.setManualSwitch(obj.data.switch_name{1},obj.data.switch_position{i});      
                 % Find the "read from file" block and set the file name property
-                obj.setResultsFileName(outputFileName);
+                obj.setResultsFileName(obj.data.sensor_encoder_out_results_file{i},obj.data.angle_out_results_file{i})
                 % Simulation code here
                 % Simulate the model
                 
@@ -50,33 +46,44 @@ classdef run_ADCRawToIab_test_cases
                 exit(1);
             end
         end
+
+        function setManualSwitch(obj,name,pos)
+            blockList = find_system(bdroot,'Type', 'Block','Name',name);
+            if ~iscell(blockList)
+            blockList = {blockList};
+            end
+            set_param(blockList{1}, 'sw', pos); 
+        end
+
         
-        function setGainValue(obj,gain)
-            blockList = find_system(bdroot,'Type', 'Block','Name','DRV_GAIN');
+        function setResultsFileName(obj,counter_out_file,angle_out_file)
+            blockList = find_system(bdroot,'Type', 'block','Name','angle_out');
             if ~iscell(blockList)
             blockList = {blockList};
             end
-            set_param(blockList{1}, 'Gain', num2str(gain));      
-        end
+            set_param(blockList{1},'FileName', angle_out_file);
 
-        function setScenarioName(obj,scenarioName,signalEditorInputFile)
-            blockList = find_system(bdroot,'Type', 'block','Name','Signal Editor');
+            blockList = find_system(bdroot,'Type', 'block','Name','counter_out');
             if ~iscell(blockList)
             blockList = {blockList};
             end
-            set_param(blockList{1}, 'FileName', signalEditorInputFile);
-            set_param(blockList{1}, 'ActiveScenario', scenarioName);
-            
+            set_param(blockList{1},'FileName', counter_out_file);
+                      
                             
         end
 
-        function setResultsFileName(obj,outputFileName)
-            blockList = find_system(bdroot,'Type', 'block','BlockType','FromFile','Name','results from file');
-            if ~iscell(blockList)
-            blockList = {blockList};
+        function loadBus(obj,file)
+            [fPath, fName, fExt] = fileparts(file);
+            switch lower(fExt)
+                case '.mat'
+                 % A MAT file
+                 load(file);
+                case '.m'
+                  % A m file
+                  run(file);
+                otherwise  % Under all circumstances SWITCH gets an OTHERWISE!
+                error('Unexpected file extension: %s', fExt);
             end
-            set_param(blockList{1}, 'FileName', outputFileName);
-                            
         end
 
         function exit_code = runSimulation(obj,model,time)

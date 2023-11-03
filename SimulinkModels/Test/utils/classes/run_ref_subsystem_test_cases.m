@@ -73,7 +73,7 @@ classdef run_ref_subsystem_test_cases
         end    
         %%Destructor
         function delete(obj)
-            close_system(obj.model);
+            close_system(obj.model,0);
         end 
     end
 end
