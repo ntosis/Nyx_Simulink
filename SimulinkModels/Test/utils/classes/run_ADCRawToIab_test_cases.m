@@ -1,4 +1,4 @@
-classdef run_ADCRawToIab_test_cases
+classdef run_ADCRawToIab_test_cases < handle
     properties
         model
         file % File with three columns
@@ -6,6 +6,7 @@ classdef run_ADCRawToIab_test_cases
     end
     properties (Access = private)
         data
+        failedModels={};
     end
     
     methods
@@ -27,7 +28,7 @@ classdef run_ADCRawToIab_test_cases
                 outputFileName = obj.data.resultDataFileName{i};
                 time = uint32(obj.data.simulationTime(i));
                 %load bus Obj
-                load(obj.data.busObj{i})
+                evalin('base', ['load(''' obj.data.busObj{i} ''')']);
                 % Find the signal editor block and set the scenario name
                 obj.setScenarioName(scenario,signalEditorInputFile);
                 % Find the DRV_GAIN block and set the gain value
@@ -46,8 +47,9 @@ classdef run_ADCRawToIab_test_cases
             if obj.success
                 disp('All simulations passed successfully.');
             else
-                disp('Simulation failed for one or more cases.');
-                exit(1);
+                disp(['Failed models:' join(string(obj.failedModels),'-')]);
+                error('Simulation failed for one or more cases.');
+                %exit(1);
             end
         end
         
@@ -87,14 +89,16 @@ classdef run_ADCRawToIab_test_cases
         catch ME
             disp(getReport(ME))
             exit_code = 1;
+            obj.failedModels{end+1}=model;
         end
-
-         % Ensure that we ALWAYS call exit
-        bdclose all;
+        
         end    
         %%Destructor
         function delete(obj)
-            close_system(obj.model,0);
+             for i = 1:height(obj.data)
+                obj.model=obj.data.modelName{i};
+                close_system(obj.model,0);
+             end
         end 
     end
 end

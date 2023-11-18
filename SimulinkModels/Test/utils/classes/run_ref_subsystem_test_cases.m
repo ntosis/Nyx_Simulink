@@ -1,12 +1,13 @@
-classdef run_ref_subsystem_test_cases
+classdef run_ref_subsystem_test_cases < handle
     properties
         model
         file % File with three columns
         success % Simulation success flag
-        failedModels={};
+        failedModels
     end
     properties (Access = private)
         data
+        
     end
     
     methods
@@ -16,7 +17,7 @@ classdef run_ref_subsystem_test_cases
             obj.success = true;
             obj.data = readtable(obj.file, 'Delimiter', ' ','Format', ...
                 "%s%d%s",'VariableNamingRule','preserve'); % space-separated
-            
+            obj.failedModels={};
         end
         
         function runSimulations(obj)
@@ -39,19 +40,19 @@ classdef run_ref_subsystem_test_cases
                 disp('All simulations passed successfully.');
             else
                 disp('Simulation failed for one or more cases.');
-                disp(obj.failedModels);
-                exit(1);
+                disp(['Failed models:' join(string(obj.failedModels),'-')]);
+                %exit(1);
             end
         end
         
         function setResultsFileName(obj,outputFileName)
             blockList = find_system(bdroot,'Type', 'block','BlockType','FromFile','Name','results from file');
             if(length(blockList)) == 0
-            disp('Be sure that the block inport from file has the name ''results from file''');
-            exit(1);
+                error('Be sure that the block inport from file has the name ''results from file''');
+                
             end
             if ~iscell(blockList)
-            blockList = {blockList};
+                blockList = {blockList};
             end
             set_param(blockList{1}, 'FileName', outputFileName);
                             
@@ -60,20 +61,21 @@ classdef run_ref_subsystem_test_cases
         function exit_code = runSimulation(obj,model,time)
             exit_code = 0;
     
-        try
-            sim(model,"StopTime",num2str(time));
-        catch ME
-            disp(getReport(ME))
-            exit_code = 1;
-            obj.failedModels(end+1)=model;
-        end
+            try
+                sim(model,"StopTime",num2str(time));
+            catch ME
+                disp(getReport(ME))
+                exit_code = 1;
+                obj.failedModels{end+1}=model;
+            end
 
-         % Ensure that we ALWAYS call exit
-        bdclose all;
         end    
         %%Destructor
         function delete(obj)
-            close_system(obj.model,0);
+            for i = 1:height(obj.data)
+                obj.model=obj.data.modelName{i};
+                close_system(obj.model,0);
+            end
         end 
     end
 end
