@@ -9,3 +9,9 @@ SimulinkModels/slprj/
 SimulinkModels/utils/
 */**/*simout.mat
 */**/BaseWork*.mat
+
+SimulinkModels/Test/testFrame_debugUnstableBehavior2.slx
+
+*.autosave
+
+*.asv
