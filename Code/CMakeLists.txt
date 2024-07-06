@@ -54,7 +54,8 @@ FOC
 PWMtoAngle
 SafetyChecks
 _sharedutils
-Interface)
+Interface
+TemperatureComp)
 #compile options
 add_compile_options(-mcpu=cortex-m4 -std=gnu11 -g -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx  -Og -ffunction-sections -fdata-sections -Wall -Wextra -fstack-usage
 --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb
@@ -66,7 +67,8 @@ file(GLOB SOURCES "ADCRawToIab/*.c"
 "FOC/*.c"
 "PWMtoAngle/*.c"
 "SafetyChecks/*.c"
-"_sharedutils/*.c")
+"_sharedutils/*.c"
+"TemperatureComp/*.c")
 
 #Generate the static library from the sources
 add_library(appSimulink STATIC ${SOURCES})

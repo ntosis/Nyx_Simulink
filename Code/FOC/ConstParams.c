@@ -325,9 +325,10 @@ const real32_T BrkPoints[3] = { -5.0F, 0.0F, 5.0F } ;
 const int8_T DRV_GAIN = 20;            /* fixdt(1,8,2^-1,0) */
 const int16_T DRV_SHUNTR_OHM = 229;    /* fixdt(1,16,2^-15,0) */
 const uint8_T DRV_V_REF_Div2 = 53U;    /* fixdt(1,8,2^-5,0) */
-const int16_T TqToIqConst = 256;       /* fixdt(1,16,2^-8,0)
+const int16_T TqToIqConst = 11797;       /* fixdt(1,16,2^-8,0)
                                           Val=2/(3*p*psim)=2/3*Kt
                                           old=97.75 */
+const uint32_T MaxValCnt = 32767U;
 const int8_T dSoll = 0;                /* int8 */
 const real32_T degresProCounter = 0.00306796166F;
 const uint8_T polepairs = 4U;

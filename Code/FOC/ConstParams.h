@@ -37,7 +37,7 @@ extern const real32_T EMFobsRS;
 
 /* fixdt(1,16,2^-8,0) */
 extern const int16_T TqToIqConst;
-
+extern const uint32_T MaxValCnt;
 /* fixdt(1,16,2^-8,0)
    Val=2/(3*p*psim)=2/3*Kt
    old=97.75 */

@@ -44,7 +44,7 @@ extern volatile uint32_t clocksNeededOfMAtlabFunc;
 extern volatile uint32_t clocksNeededOfMAtlabFuncMAX;
 extern volatile uint32_t clocksNeededOfMAtlabFuncMIN;
 extern volatile uint16_t PWMdbg[3];
-
+extern volatile uint16_t Sig_ADCin_temptr_sens;
 
 struct CPU_clocks {
   uint32_t StepFunctionClocks;

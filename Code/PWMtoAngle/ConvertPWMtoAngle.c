@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 7.27
+ * Model version                  : 7.30
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Thu Jul  4 23:01:13 2024
+ * C/C++ source code generated on : Sat Jul  6 10:12:57 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -17,8 +17,8 @@
 #include "rtwtypes.h"
 #include "rt_modf_snf.h"
 #include "ConvertPWMtoAngle_private.h"
-#include "ConstParams.h"
 #include "PWMtoAngle_const.h"
+#include "ConstParams.h"
 #include "rt_nonfinite.h"
 
 /* Exported block signals */
@@ -33,6 +33,13 @@ MdlrefDW_ConvertPWMtoAngle_T ConvertPWMtoAngle_MdlrefDW;
 /* Block states (default storage) */
 DW_ConvertPWMtoAngle_f_T ConvertPWMtoAngle_DW;
 
+/* System initialize for referenced model: 'ConvertPWMtoAngle' */
+void ConvertPWMtoAngle_Init(void)
+{
+  /* Start for DataStoreMemory: '<Root>/Data Store Memory' */
+  Sig_invert_angleElec = true;
+}
+
 /* Output and update for referenced model: 'ConvertPWMtoAngle' */
 void ConvertPWMtoAngle(const boolean_T *rtu_UsersInputIsNull, const real32_T
   *rtu_AngleMecIn, real32_T *rty_AngleElec, real32_T *rty_AnlgleMec)
@@ -44,8 +51,6 @@ void ConvertPWMtoAngle(const boolean_T *rtu_UsersInputIsNull, const real32_T
 
   /* If: '<Root>/If' incorporates:
    *  Constant: '<S9>/Constant'
-   *  DataStoreRead: '<S1>/Data Store Read'
-   *  If: '<S1>/If'
    *  Logic: '<Root>/OR'
    *  RelationalOperator: '<S4>/FixPt Relational Operator'
    *  RelationalOperator: '<S9>/Compare'
@@ -103,22 +108,32 @@ void ConvertPWMtoAngle(const boolean_T *rtu_UsersInputIsNull, const real32_T
   } else {
     int32_T tmp_1;
     real32_T rtb_Switch1_p;
+    boolean_T rtb_EncoderCounterHasOverflowed;
 
     /* Outputs for IfAction SubSystem: '<Root>/Calculate angle from encoder sensor' incorporates:
      *  ActionPort: '<S1>/Action Port'
+     */
+    /* DataStoreRead: '<S1>/Data Store Read' */
+    rtb_EncoderCounterHasOverflowed = EncoderCounterHasOverflowed;
+
+    /* If: '<S1>/If' incorporates:
+     *  DataStoreRead: '<S1>/Data Store Read'
      */
     if (EncoderCounterHasOverflowed) {
       /* Outputs for IfAction SubSystem: '<S1>/Subsystem' incorporates:
        *  ActionPort: '<S7>/Action Port'
        */
-      /* If: '<S1>/If' incorporates:
+      /* Logic: '<S7>/Logical Operator' incorporates:
+       *  DataStoreWrite: '<S7>/Data Store Write'
+       */
+      EncoderCounterHasOverflowed = false;
+
+      /* Switch: '<S7>/Switch' incorporates:
        *  DataTypeConversion: '<Root>/Data Type Conversion'
        *  Inport generated from: '<Root>/EncoderCounterIn'
        *  RelationalOperator: '<S7>/Relational Operator'
-       *  Switch: '<S7>/Switch'
        *  UnitDelay: '<S1>/Unit Delay'
        */
-    	EncoderCounterHasOverflowed =0;
       if ((int32_T)EncoderCounter > EncoderCounterOld) {
         uint32_T tmp;
 
@@ -171,16 +186,22 @@ void ConvertPWMtoAngle(const boolean_T *rtu_UsersInputIsNull, const real32_T
         /* End of Sum: '<S7>/Add1' */
       }
 
+      /* End of Switch: '<S7>/Switch' */
       /* End of Outputs for SubSystem: '<S1>/Subsystem' */
+    }
 
-      /* Switch: '<S1>/Switch1' incorporates:
-       *  UnitDelay: '<Root>/Unit Delay1'
-       */
+    /* End of If: '<S1>/If' */
+
+    /* Switch: '<S1>/Switch1' incorporates:
+     *  UnitDelay: '<Root>/Unit Delay1'
+     */
+    if (rtb_EncoderCounterHasOverflowed) {
       rtb_Switch1_p = initialAngle;
     } else {
-      /* Switch: '<S1>/Switch1' */
       rtb_Switch1_p = *rtu_AngleMecIn;
     }
+
+    /* End of Switch: '<S1>/Switch1' */
 
     /* Sum: '<S1>/Add2' incorporates:
      *  DataTypeConversion: '<Root>/Data Type Conversion'

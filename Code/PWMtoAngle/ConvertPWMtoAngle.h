@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 7.27
+ * Model version                  : 7.30
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Thu Jul  4 23:01:13 2024
+ * C/C++ source code generated on : Sat Jul  6 10:12:57 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -77,6 +77,7 @@ extern real32_T initialAngle;          /* '<S5>/Data Type Conversion' */
  */
 extern int32_T EncoderCounterOld;      /* '<S1>/Unit Delay' */
 extern boolean_T Sig_invert_angleElec; /* '<Root>/Data Store Memory' */
+extern void ConvertPWMtoAngle_Init(void);
 extern void ConvertPWMtoAngle(const boolean_T *rtu_UsersInputIsNull, const
   real32_T *rtu_AngleMecIn, real32_T *rty_AngleElec, real32_T *rty_AnlgleMec);
 

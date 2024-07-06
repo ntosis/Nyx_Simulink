@@ -24,7 +24,12 @@
 #include "SafetyChecks.h"
 #define ConvertPWMtoAngle_MDLREF_HIDE_CHILD_
 #include "ConvertPWMtoAngle.h"
+#define SAMPLE_RATE 5000 // Sampling rate in Hz (100 samples per second)
+#define CUTOFF_FREQ 100 // Cutoff frequency in Hz
 
+// Calculate the filter coefficient based on the cutoff frequency and sampling rate
+#define ALPHA (float)(2.0f * 3.14159265f * CUTOFF_FREQ / SAMPLE_RATE) / (2.0f * 3.14159265f * CUTOFF_FREQ / SAMPLE_RATE + 1.0f)
+float lowPassFilter(float currentValue, float previousFilteredValue); // todo added manual low pass filter//
 /* Exported block signals */
 boolean_T resetPIIntegratorDQ;         /* '<Root>/Inport6' */
 boolean_T enableFluxObs;               /* '<Root>/Inport2' */
@@ -91,27 +96,27 @@ int16_T d_q_Voltage_Limiter_sat_pos = 160;/* Variable: d_q_Voltage_Limiter_sat_p
                                            *   '<S155>/DeadZone'
                                            * fixdt(1,16,2^-4,0)
                                            */
-uint16_T Ki_Rpm = 20480U;              /* Variable: Ki_Rpm
+uint16_T Ki_Rpm = 0U;              /* Variable: Ki_Rpm
                                         * Referenced by: '<S5>/Constant7'
                                         * fixdt(0,16,2^-11,0)
                                         */
-uint16_T Kp_Rpm = 299U;                /* Variable: Kp_Rpm
+uint16_T Kp_Rpm = 0U;                /* Variable: Kp_Rpm
                                         * Referenced by: '<S5>/Constant6'
                                         * fixdt(0,16,2^-11,0)
                                         */
-uint16_T Ki_dAxis = 46080U;            /* Variable: Ki_dAxis
+uint16_T Ki_dAxis = 0U;            /* Variable: Ki_dAxis
                                         * Referenced by: '<S73>/Constant7'
                                         * fixdt(0,16,2^-8,0)
                                         */
-uint16_T Ki_qAxis = 44800U;            /* Variable: Ki_qAxis
+uint16_T Ki_qAxis = 0U;            /* Variable: Ki_qAxis
                                         * Referenced by: '<S73>/Constant5'
                                         * fixdt(0,16,2^-8,0)
                                         */
-uint16_T Kp_dAxis = 37U;               /* Variable: Kp_dAxis
+uint16_T Kp_dAxis = 200U;               /* Variable: Kp_dAxis
                                         * Referenced by: '<S73>/Constant6'
                                         * fixdt(0,16,2^-8,0)
                                         */
-uint16_T Kp_qAxis = 37U;               /* Variable: Kp_qAxis
+uint16_T Kp_qAxis = 800U;               /* Variable: Kp_qAxis
                                         * Referenced by: '<S73>/Constant4'
                                         * fixdt(0,16,2^-8,0)
                                         */
@@ -593,7 +598,7 @@ void MotorControlLib_step1(void)       /* Sample time: [0.0002s, 0.0s] */
    *  RelationalOperator: '<S11>/Compare'
    */
   Sig_requestMotorBreak = ((MotorControlLib_B.TmpRTBAtANDInport1 && (rpmSoll ==
-    0)) || (qSoll == 0));
+    0)) || (!MotorControlLib_B.TmpRTBAtANDInport1 && (qSoll == 0)));
 
   /* ModelReference: '<Root>/AngleCalculation' incorporates:
    *  Inport: '<Root>/Duty cycle input'
@@ -791,12 +796,12 @@ void MotorControlLib_step1(void)       /* Sample time: [0.0002s, 0.0s] */
   /* DataTypeConversion: '<S73>/Data Type Conversion2' incorporates:
    *  Constant: '<S73>/Constant4'
    */
-  Sig_PQ = (real32_T)Kp_qAxis * 0.00390625F;
+  Sig_PQ = (real32_T)Kp_qAxis * 0.0009765625F; //todo 2^-10
 
   /* DataTypeConversion: '<S73>/Data Type Conversion3' incorporates:
    *  Constant: '<S73>/Constant6'
    */
-  Sig_PD = (real32_T)Kp_dAxis * 0.00390625F;
+  Sig_PD = (real32_T)Kp_dAxis * 0.0009765625F; //todo 2^-10
 
   /* DataTypeConversion: '<S73>/Data Type Conversion4' incorporates:
    *  Constant: '<S73>/Constant7'
@@ -831,16 +836,22 @@ void MotorControlLib_step1(void)       /* Sample time: [0.0002s, 0.0s] */
    */
   rtb_UnitDelay1_b = (rtb_UnitDelay_n || resetPIIntegratorDQ);
 
+  if (!Sig_requestMotorBreak) {
   /* Outputs for Atomic SubSystem: '<S73>/PI DAxis' */
-  rtb_RateTransition5 = MotorControlLib_PIDAxis_m(Sig_dAxis_errorSum_m, Sig_PD,
-    Sig_ID, rtb_UnitDelay1_b, 0.0F, &MotorControlLib_DW.PIDAxis_m);
+  rtb_RateTransition5 =  (MotorControlLib_PIDAxis_m(Sig_dAxis_errorSum_m, Sig_PD,
+    Sig_ID, rtb_UnitDelay1_b, 0.0F, &MotorControlLib_DW.PIDAxis_m));
 
   /* End of Outputs for SubSystem: '<S73>/PI DAxis' */
 
   /* Outputs for Atomic SubSystem: '<S73>/PI Qaxis' */
-  rtb_Saturation = MotorControlLib_PIDAxis_m(Sig_qAxis_errorSum_m, Sig_PQ,
-    Sig_IQ, rtb_UnitDelay1_b, 0.0F, &MotorControlLib_DW.PIQaxis);
+  rtb_Saturation = (-1.0F)*(MotorControlLib_PIDAxis_m(Sig_qAxis_errorSum_m, Sig_PQ,
+    Sig_IQ, rtb_UnitDelay1_b, 0.0F, &MotorControlLib_DW.PIQaxis));
 
+  }
+  else {
+	  rtb_Saturation=0.0f;
+	  rtb_RateTransition5=0.0f;
+  }
   /* End of Outputs for SubSystem: '<S73>/PI Qaxis' */
 
   /* Update for UnitDelay: '<S76>/Unit Delay' */
@@ -977,13 +988,15 @@ void MotorControlLib_step1(void)       /* Sample time: [0.0002s, 0.0s] */
     &pwmTableData[0], 2U));
 
   /* DiscreteIntegrator: '<Root>/Integrator of Angle' */
-  Sig_angle_speed = MotorControlLib_DW.IntegratorofAngle_DSTATE;
+  Sig_angle_speed = lowPassFilter((float)(Sig_MechanicalAngle - AngleMec_1z)/(0.0002F),Sig_angle_speed);
 
+//MotorControlLib_DW.IntegratorofAngle_DSTATE;
+  Sig_Rpm_measurment = 9.54929638F * Sig_angle_speed;
   /* Update for UnitDelay: '<Root>/Unit Delay' */
   AngleMec_1z = Sig_MechanicalAngle;
 
   /* Update for DiscreteIntegrator: '<Root>/Integrator of Angle' */
-  MotorControlLib_DW.IntegratorofAngle_DSTATE += 0.0002F * Sig_MechanicalAngle;
+  MotorControlLib_DW.IntegratorofAngle_DSTATE +=  0.0002F * Sig_MechanicalAngle;
 }
 
 /* Model step function for TID2 */
@@ -1101,6 +1114,9 @@ void MotorControlLib_terminate(void)
   /* (no terminate code required) */
 }
 
+float lowPassFilter(float currentValue, float previousFilteredValue) {
+    return ALPHA * currentValue + (1 - ALPHA) * previousFilteredValue;
+}
 /*
  * File trailer for generated code.
  *
