@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'ConvertPWMtoAngle'.
  *
- * Model version                  : 3.1
+ * Model version                  : 7.27
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jul 31 09:55:56 2023
+ * C/C++ source code generated on : Thu Jul  4 23:01:13 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -87,7 +87,8 @@ extern uint16_T Duty;                  /* '<Root>/DutyIn' */
 extern uint32_T EncoderCounter;        /* '<Root>/EncoderCounterIn' */
 
 /* Imported (extern) states */
-extern boolean_T EncoderCounterHasOverflowed;/* '<S1>/Data Store Memory' */
+extern boolean_T EncoderCounterHasOverflowed;
+                      /* Simulink.Signal object 'EncoderCounterHasOverflowed' */
 
 #endif                             /* RTW_HEADER_ConvertPWMtoAngle_private_h_ */
 
