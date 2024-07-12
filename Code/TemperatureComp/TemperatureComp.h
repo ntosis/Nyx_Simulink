@@ -50,6 +50,7 @@ typedef struct {
    *   '<Root>/adc to mv1'
    */
   uint16_T pooled1[2];
+  uint16_T pooled2[2];
 
   /* Computed Parameter: adctomv_bp01Data
    * Referenced by: '<Root>/adc to mv'

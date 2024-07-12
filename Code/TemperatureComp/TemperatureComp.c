@@ -193,7 +193,7 @@ void TemperatureComp_step(void)
    *  Lookup_n-D: '<Root>/adc to mv'
    */
   Sig_board_temperature = look1_iu16lu32n16ts16D_8WDIoWoi(rtb_adctomv,
-    TemperatureComp_ConstP.pooled1, TemperatureComp_ConstP.adctomv1_tableData,
+    TemperatureComp_ConstP.pooled2, TemperatureComp_ConstP.adctomv1_tableData,
     &TemperatureComp_DW.m_bpIndex_k, 1U);
 }
 

@@ -20,7 +20,7 @@ const ConstP_TemperatureComp_T TemperatureComp_ConstP = {
   /* Computed Parameter: adctomv1_tableData
    * Referenced by: '<Root>/adc to mv1'
    */
-  { -40, 150 },
+  { 150, -50 },
 
   /* Pooled Parameter (Expression: [0 3300])
    * Referenced by:
@@ -28,6 +28,7 @@ const ConstP_TemperatureComp_T TemperatureComp_ConstP = {
    *   '<Root>/adc to mv1'
    */
   { 0U, 3300U },
+  { 538U, 3277U },
 
   /* Computed Parameter: adctomv_bp01Data
    * Referenced by: '<Root>/adc to mv'

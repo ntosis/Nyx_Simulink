@@ -15,3 +15,5 @@ SimulinkModels/Test/testFrame_debugUnstableBehavior2.slx
 *.autosave
 
 *.asv
+
+*.r2020b
