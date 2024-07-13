@@ -988,15 +988,21 @@ void MotorControlLib_step1(void)       /* Sample time: [0.0002s, 0.0s] */
     &pwmTableData[0], 2U));
 
   /* DiscreteIntegrator: '<Root>/Integrator of Angle' */
-  Sig_angle_speed = lowPassFilter((float)(Sig_MechanicalAngle - AngleMec_1z)/(0.0002F),Sig_angle_speed);
-
+ // Sig_angle_speed = lowPassFilter((float)(Sig_MechanicalAngle - AngleMec_1z)/(0.0002F),Sig_angle_speed);
+  /* SampleTimeMath: '<S3>/TSamp'
+   *
+   * About '<S3>/TSamp':
+   *  y = u * K where K = 1 / ( w * Ts )
+   */
+rtb_RateTransition5 = Sig_MechanicalAngle * 5000.0F;
+ Sig_angle_speed = rtb_AngleMec_1z - IntegratorofAngle_DSTATE;
 //MotorControlLib_DW.IntegratorofAngle_DSTATE;
   Sig_Rpm_measurment = 9.54929638F * Sig_angle_speed;
   /* Update for UnitDelay: '<Root>/Unit Delay' */
   AngleMec_1z = Sig_MechanicalAngle;
 
   /* Update for DiscreteIntegrator: '<Root>/Integrator of Angle' */
-  MotorControlLib_DW.IntegratorofAngle_DSTATE +=  0.0002F * Sig_MechanicalAngle;
+  MotorControlLib_DW.IntegratorofAngle_DSTATE =  rtb_AngleMec_1z;
 }
 
 /* Model step function for TID2 */
@@ -1081,6 +1087,12 @@ void MotorControlLib_initialize(void)
   /* Model Initialize function for ModelReference Block: '<Root>/SafetyChecks' */
   SafetyChecks_initialize(rtmGetErrorStatusPointer(MotorControlLib_M),
     &(MotorControlLib_DW.SafetyChecks_InstanceData.rtm));
+
+  /* SystemInitialize for ModelReference: '<Root>/AngleCalculation' incorporates:
+   *  Inport: '<Root>/Duty cycle input'
+   *  Inport: '<Root>/Encoder input'
+   */
+  ConvertPWMtoAngle_Init();
 
   /* SystemInitialize for Enabled SubSystem: '<Root>/PI controller RPM' */
   /* SystemInitialize for Atomic SubSystem: '<S5>/PI DAxis' */
