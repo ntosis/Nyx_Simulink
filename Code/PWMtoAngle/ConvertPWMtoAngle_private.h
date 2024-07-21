@@ -83,7 +83,7 @@ preprocessor word size checks.
 #endif
 
 /* Imported (extern) block signals */
-extern uint16_T Duty;                  /* '<Root>/DutyIn' */
+extern volatile uint16_T Duty;                  /* '<Root>/DutyIn' */
 extern uint32_T EncoderCounter;        /* '<Root>/EncoderCounterIn' */
 
 /* Imported (extern) states */

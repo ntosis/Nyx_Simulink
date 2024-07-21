@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 3.74
+ * Model version                  : 5.0
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jun 26 15:58:26 2023
+ * C/C++ source code generated on : Fri Jun  7 20:05:02 2024
  */
 
 #ifndef RTW_HEADER_look1_iflftu16Df_binlcm_h_

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 1.6
+ * Model version                  : 5.8
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jul 31 15:23:33 2023
+ * C/C++ source code generated on : Tue Jul 16 15:23:47 2024
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -21,6 +21,14 @@
 
 /* Includes for objects with custom storage classes */
 #include "InterfaceBswApp.h"
+
+/*
+ * Check that imported macros with storage class "ImportedDefine" are defined
+ */
+#ifndef CounterFactor_us
+#error The value of parameter "CounterFactor_us" is not defined
+#endif
+
 #ifndef UCHAR_MAX
 #include <limits.h>
 #endif
@@ -69,22 +77,22 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
-extern const real32_T rtCP_pooled_TqtEl1bYGCPz[502];
-extern const boolean_T rtCP_pooled_2ukhhMbQGsh4[16];
+extern const real32_T rtCP_pooled_7NbV46a8FLEx[502];
+extern const boolean_T rtCP_pooled_kUC6nmgO8rex[16];
 
-#define rtCP_sine_table_values_Value   rtCP_pooled_TqtEl1bYGCPz  /* Computed Parameter: rtCP_sine_table_values_Value
-                                                                  * Referenced by: '<S12>/sine_table_values'
+#define rtCP_sine_table_values_Value   rtCP_pooled_7NbV46a8FLEx  /* Computed Parameter: rtCP_sine_table_values_Value
+                                                                  * Referenced by: '<S14>/sine_table_values'
                                                                   */
-#define rtCP_Logic_table               rtCP_pooled_2ukhhMbQGsh4  /* Computed Parameter: rtCP_Logic_table
-                                                                  * Referenced by: '<S189>/Logic'
+#define rtCP_Logic_table               rtCP_pooled_kUC6nmgO8rex  /* Computed Parameter: rtCP_Logic_table
+                                                                  * Referenced by: '<S193>/Logic'
                                                                   */
-#define rtCP_Logic_table_m             rtCP_pooled_2ukhhMbQGsh4  /* Computed Parameter: rtCP_Logic_table_m
-                                                                  * Referenced by: '<S190>/Logic'
+#define rtCP_Logic_table_m             rtCP_pooled_kUC6nmgO8rex  /* Computed Parameter: rtCP_Logic_table_m
+                                                                  * Referenced by: '<S194>/Logic'
                                                                   */
 
 /* Imported (extern) block signals */
 extern uint32_T EncoderCounter;        /* '<Root>/Encoder input' */
-extern uint16_T Duty;                  /* '<Root>/Duty cycle input' */
+extern volatile uint16_T Duty;                  /* '<Root>/Duty cycle input' */
 extern void MotorControlLi_PIDAxis_Init(DW_PIDAxis_MotorControlLib_T *localDW);
 extern void MotorControlLib_PIDAxis(real32_T rtu_error, real32_T rtu_P, real32_T
   rtu_I, boolean_T rtu_Reset, real32_T rtu_init, real32_T *rty_PIDOut,
@@ -95,6 +103,7 @@ extern void MotorControl_PIDAxis_c_Init(DW_PIDAxis_MotorControlLib_c_T *localDW)
 extern real32_T MotorControlLib_PIDAxis_m(real32_T rtu_error, real32_T rtu_P,
   real32_T rtu_I, boolean_T rtu_Reset, real32_T rtu_init,
   DW_PIDAxis_MotorControlLib_c_T *localDW);
+extern void M_Task_Calculate_fast_speed(boolean_T rtu_u);
 
 #endif                               /* RTW_HEADER_MotorControlLib_private_h_ */
 

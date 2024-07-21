@@ -1,17 +1,17 @@
 /*
- * File: look1_iflftu16Df_binlcm.c
+ * File: look1_iflftu16Df_binlc.c
  *
  * Code generated for Simulink model 'MotorControlLib'.
  *
- * Model version                  : 5.0
+ * Model version                  : 5.8
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Jun  7 20:05:02 2024
+ * C/C++ source code generated on : Tue Jul 16 15:23:47 2024
  */
 
-#include "look1_iflftu16Df_binlcm.h"
+#include "look1_iflftu16Df_binlc.h"
 #include "rtwtypes.h"
 
-uint16_T look1_iflftu16Df_binlcm(real32_T u0, const real32_T bp0[], const
+uint16_T look1_iflftu16Df_binlc(real32_T u0, const real32_T bp0[], const
   uint16_T table[], uint32_T maxIndex)
 {
   real32_T frac;
