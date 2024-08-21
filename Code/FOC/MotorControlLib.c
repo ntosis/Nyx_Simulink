@@ -845,22 +845,22 @@ void MotorControlLib_step1(void)       /* Sample time: [0.0002s, 0.0s] */
   /* DataTypeConversion: '<S75>/Data Type Conversion1' incorporates:
    *  Constant: '<S75>/Constant5'
    */
-  Sig_IQ = (real32_T)Ki_qAxis * 0.00390625F;
+  Sig_IQ = (real32_T)Ki_qAxis * 0.0009765625F;
 
   /* DataTypeConversion: '<S75>/Data Type Conversion2' incorporates:
    *  Constant: '<S75>/Constant4'
    */
-  Sig_PQ = (real32_T)Kp_qAxis * 0.00390625F;
+  Sig_PQ = (real32_T)Kp_qAxis * 0.0009765625F;
 
   /* DataTypeConversion: '<S75>/Data Type Conversion3' incorporates:
    *  Constant: '<S75>/Constant6'
    */
-  Sig_PD = (real32_T)Kp_dAxis * 0.00390625F;
+  Sig_PD = (real32_T)Kp_dAxis * 0.0009765625F;
 
   /* DataTypeConversion: '<S75>/Data Type Conversion4' incorporates:
    *  Constant: '<S75>/Constant7'
    */
-  Sig_ID = (real32_T)Ki_dAxis * 0.00390625F;
+  Sig_ID = (real32_T)Ki_dAxis * 0.0009765625F;
 
   /* Outputs for Enabled SubSystem: '<S78>/Subsystem' incorporates:
    *  EnablePort: '<S182>/Enable'
